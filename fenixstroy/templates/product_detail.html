@@ -12,7 +12,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'base' %}">Главная</a></li>
             <li class="breadcrumb-item"><a href="#">{{ product.category.name }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
         </ol>
       </nav>
       <!-- End breadcrumb -->
@@ -96,18 +96,57 @@
           <div class="card">
             <div class="card-body">
               <h1 class="h2">{{ product.name }}</h1>
-              <!--Start Rating-->
+
+              <!--Start Rating and Comments-->
               <p class="py-2">
-                <i class="fa fa-star text-warning"></i>
-                <i class="fa fa-star text-warning"></i>
-                <i class="fa fa-star text-warning"></i>
-                <i class="fa fa-star text-warning"></i>
-                <i class="fa fa-star text-secondary"></i>
+
+                <!--Start Stars-->
+                {% if int_rating >= 1 and int_rating < 2 %}
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                {% elif int_rating >= 2 and int_rating < 3 %}
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                {% elif int_rating >= 3 and int_rating < 4 %}
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                {% elif int_rating >= 4 and int_rating < 5 %}
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                {% elif int_rating == 5 %}
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                  <i class="fa fa-star text-warning"></i>
+                {% else %}
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                  <i class="fa fa-star text-secondary"></i>
+                {% endif %}
+                <!--End Stars-->
+
                 <span class="list-inline-item text-dark">Рейтинг {{ int_rating }} | {{ product.comments.count }} Комментарии</span>
               </p>
-              <!--End Rating-->
+              <!--End Rating and Comments-->
+
               <p class="h3 py-2">Артикул: {{ product.article_number }}</p>
               <p class="h3 py-2">Цена: {{ product.price }} руб.</p>
+
             <!--Start Quantity-->
               <div class="col-auto">
                     <ul class="list-inline pb-3">
