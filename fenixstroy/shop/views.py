@@ -11,7 +11,7 @@ def test_view(request):
 class ProductDetailView(DetailView):
 
     model = Gloves
-    queryset = Gloves.objects.all()
+    queryset = Gloves.objects.filter(published=True).all()
     context_object_name = 'product'
     template_name = 'product_detail.html'
     slug_url_kwarg = 'slug'
