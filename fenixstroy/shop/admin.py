@@ -6,7 +6,7 @@ from .models import (Cart, CartProduct, Category, CustomUser, Gloves,
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'slug', 'published')
+    list_display = ('pk', 'name', 'slug', 'image', 'published')
     list_display_links = ('name',)
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
@@ -30,7 +30,14 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 class GlovesAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'article_number', 'name', 'price', 'category', 'manufacturer', 'published')
+    list_display = (
+        'pk',
+        'article_number',
+        'name',
+        'price',
+        'category',
+        'manufacturer',
+        'published')
     list_display_links = ('name',)
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
