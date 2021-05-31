@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from .models import (Cart, CartProduct, Category, CustomUser, Gloves,
-                     Manufacturer, Gallery)
+                     Manufacturer, Gallery, Comment)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -69,9 +69,17 @@ class CartAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'product', 'author', 'text', 'score', 'created')
+    list_display_links = ('product',)
+    search_fields = ('product', 'author')
+    empty_value_display = '-пусто-'
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(CartProduct, CartProductAdmin)
 admin.site.register(Cart, CartAdmin)
 admin.site.register(Gloves, GlovesAdmin)
+admin.site.register(Comment, CommentAdmin)

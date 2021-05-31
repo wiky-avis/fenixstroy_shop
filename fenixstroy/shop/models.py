@@ -7,6 +7,7 @@ import sys
 from io import BytesIO
 from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 User = get_user_model()
 
@@ -139,6 +140,8 @@ class Product(models.Model):
         upload_to='products/',
         null=True,
         blank=True)
+    rating = models.IntegerField(
+        'Рейтинг', null=True, blank=True, default=None)
     published = models.BooleanField(verbose_name='Опубликовано')
 
     class Meta:
@@ -274,3 +277,28 @@ class Gallery(models.Model):
 
     def get_absolute_url(self):
         return get_product_url(self, 'product_detail')
+
+
+class Comment(models.Model):
+    product = models.ForeignKey(
+        Gloves,
+        on_delete=models.CASCADE,
+        related_name='comments', verbose_name='Товар')
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments', verbose_name='Автор')
+    text = models.TextField(
+        verbose_name='Комментарий',
+        help_text='Введите пожалуйста текст вашего комментария')
+    score = models.IntegerField(
+        'Оценка',
+        default=1,
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    created = models.DateTimeField(
+        verbose_name='Дата публикации', auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
