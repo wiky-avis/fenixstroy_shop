@@ -258,3 +258,19 @@ class Gloves(Product):
 
     def get_absolute_url(self):
         return get_product_url(self, 'product_detail')
+
+
+class Gallery(models.Model):
+    image = models.ImageField(
+        verbose_name='Изображение товара',
+        upload_to='gallery/',
+        null=True,
+        blank=True)
+    gloves = models.ForeignKey(
+        Gloves, on_delete=models.CASCADE, related_name='images')
+
+    def __str__(self):
+        return f'{self.image.url}'
+
+    def get_absolute_url(self):
+        return get_product_url(self, 'product_detail')

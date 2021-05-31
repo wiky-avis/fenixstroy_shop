@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from .models import (Cart, CartProduct, Category, CustomUser, Gloves,
-                     Manufacturer)
+                     Manufacturer, Gallery)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -29,6 +29,11 @@ class CustomUserAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+class GalleryInline(admin.TabularInline):
+    fk_name = 'gloves'
+    model = Gallery
+
+
 class GlovesAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
@@ -44,6 +49,7 @@ class GlovesAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     # readonly_fields = ('get_image',)
     list_editable = ['category', 'price', 'manufacturer', 'published']
+    inlines = [GalleryInline]
 
     # def get_image(self, obj):
     #     return mark_safe(f'<img src={obj.image.url} width="50" height="60"')
