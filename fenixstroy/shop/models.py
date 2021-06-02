@@ -141,7 +141,7 @@ class Product(models.Model):
         null=True,
         blank=True)
     rating = models.IntegerField(
-        'Рейтинг', null=True, blank=True, default=None)
+        'Рейтинг', null=True, blank=True, default=0)
     published = models.BooleanField(verbose_name='Опубликовано')
 
     class Meta:
