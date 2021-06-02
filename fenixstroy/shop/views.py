@@ -22,6 +22,4 @@ class ProductDetailView(DetailView):
         gloves = get_object_or_404(Gloves, slug=self.kwargs.get('slug'))
         int_rating = gloves.comments.all().aggregate(Avg('score'))
         context['int_rating'] = int_rating['score__avg']
-        if context['int_rating'] is None:
-            context['int_rating'] = 0
         return context
