@@ -14,8 +14,9 @@ User = get_user_model()
 
 def get_product_url(obj, viewname):
     """для формирования слага"""
-    ct_model = obj.__class__._meta.model_name
-    return reverse(viewname, kwargs={'ct-model': ct_model, 'slug': obj.slug})
+    # ct_model = obj.__class__._meta.model_name
+    # return reverse(viewname, kwargs={'ct-model': ct_model, 'slug': obj.slug})
+    return reverse(viewname, kwargs={'slug': obj.slug})
 
 
 class MinResolutionErrorException(Exception):
@@ -30,20 +31,21 @@ class LatestProductManager:
 
     @staticmethod
     def get_products_for_main_page(*args, **kwargs):
-        whith_respect_to = kwargs.get('whith_respect_to')
+        with_respect_to = kwargs.get('with_respect_to')
         products = []
         ct_models = ContentType.objects.filter(model__in=args)
         for ct_model in ct_models:
-            model_products = ct_model.model_class()._base_manager.all().order_by('-id')[:5]
+            model_products = (
+                ct_model.model_class()._base_manager.all().order_by('-id')[:5])
             products.extend(model_products)
-        if whith_respect_to:
-            ct_model = ContentType.objects.filter(model=whith_respect_to)
+        if with_respect_to:
+            ct_model = ContentType.objects.filter(model=with_respect_to)
             if ct_model.exists():
-                if whith_respect_to in args:
+                if with_respect_to in args:
                     return sorted(
                         products,
-                        key=lambda x: x.__class__._meta.model_name.starswith(
-                            whith_respect_to),
+                        key=lambda x: x.__class__._meta.model_name.startswith(
+                            with_respect_to),
                         reverse=True
                     )
         return products
@@ -89,7 +91,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:product_list_by_category', args=[self.slug])
+        return reverse('category_detail', kwargs={'slug': self.slug})
 
 
 class Manufacturer(models.Model):
@@ -141,7 +143,7 @@ class Product(models.Model):
         null=True,
         blank=True)
     rating = models.IntegerField(
-        'Рейтинг', null=True, blank=True, default=None)
+        'Рейтинг', null=True, blank=True, default=0)
     published = models.BooleanField(verbose_name='Опубликовано')
 
     class Meta:
@@ -154,7 +156,7 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:product_detail', args=[self.id, self.slug])
+        return get_product_url('product_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         image = self.image
@@ -202,14 +204,14 @@ class CartProduct(models.Model):
     qty = models.PositiveIntegerField(
         default=1, verbose_name='Количество')
     final_price = models.DecimalField(
-        max_digits=9, decimal_places=2, verbose_name='Общая цена')
+        max_digits=9, decimal_places=2, verbose_name='Общая цена', default=0)
 
     class Meta:
         verbose_name_plural = 'Товары корзины'
         verbose_name = 'Товар корзины'
 
     def __str__(self) -> str:
-        return f'Продукт: {self.product.title}(для корзины).'
+        return f'Продукт: {self.content_obj.title}(для корзины).'
 
 
 class Cart(models.Model):

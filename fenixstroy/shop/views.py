@@ -1,16 +1,35 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Gloves, Comment, Product
+from .models import Gloves, Comment, Product, Category, LatestProducts
+from django.views.generic.base import View
+from .mixins import CategoryDetailMixin
 from django.db.models import Avg
 
 from django.views.generic import DetailView
 
 
-def test_view(request):
-    return render(request, 'base.html', {})
+class BaseView(View):
+
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.filter(published=True).all()
+        products = LatestProducts.objects.get_products_for_main_page(
+            'gloves',
+            whith_respect_to='gloves')
+        return render(
+            request, 'base.html', {
+                'categories': categories, 'products': products})
 
 
-class ProductDetailView(DetailView):
+class ShopView(View):
 
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.filter(published=True).all()
+        products = Gloves.objects.filter(published=True).all()
+        return render(
+            request, 'shop.html', {
+                'categories': categories, 'products': products})
+
+
+class ProductDetailView(CategoryDetailMixin, DetailView):
     model = Gloves
     queryset = Gloves.objects.filter(published=True).all()
     context_object_name = 'product'
@@ -25,3 +44,11 @@ class ProductDetailView(DetailView):
         if context['int_rating'] is None:
             context['int_rating'] = 0
         return context
+
+
+class CategoryDetailView(CategoryDetailMixin, DetailView):
+    model = Category
+    queryset = Category.objects.all()
+    context_object_name = 'category'
+    template_name = 'category_detail.html'
+    slug_url_kwarg = 'slug'
