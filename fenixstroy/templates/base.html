@@ -64,16 +64,16 @@ https://templatemo.com/tm-559-zay-shop
         <div class="flex-fill">
           <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Главная</a>
+              <a class="nav-link" href="{% url 'base' %}">Главная</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">О нас</a>
+              <a class="nav-link" href="{% url 'about:about' %}">О нас</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'shop' %}">Магазин</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Контакты</a>
+              <a class="nav-link" href="{% url 'about:contact' %}">Контакты</a>
             </li>
           </ul>
         </div>
