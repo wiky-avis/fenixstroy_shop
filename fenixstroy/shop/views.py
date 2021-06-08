@@ -50,7 +50,6 @@ class ProductDetailView(CartMixin, CategoryDetailMixin, DetailView):
         gloves = get_object_or_404(Gloves, slug=self.kwargs.get('slug'))
         int_rating = gloves.comments.all().aggregate(Avg('score'))
         context['int_rating'] = int_rating['score__avg']
-        context['ct_model'] = self.model._meta.model_name
         context['cart'] = self.cart
         return context
 
@@ -71,7 +70,7 @@ class CategoryDetailView(CartMixin, CategoryDetailMixin, DetailView):
 class AddToCartView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
-        ct_model, product_slug = kwargs.get('ct_model'), kwargs.get('slug')
+        product_slug = kwargs.get('slug')
         content_type = ContentType.objects.get(model=ct_model)
         product = content_type.model_class().objects.get(slug=product_slug)
         cart_product, created = CartProduct.objects.get_or_create(
