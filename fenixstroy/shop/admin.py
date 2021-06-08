@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import (Cart, CartProduct, Category, CustomUser, Gloves,
+from .models import (Category, CustomUser, Gloves,
                      Manufacturer, Gallery, Comment)
 
 
@@ -23,9 +23,9 @@ class ManufacturerAdmin(admin.ModelAdmin):
 
 
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'phone', 'address')
-    list_display_links = ('user',)
-    search_fields = ('user',)
+    list_display = ('pk', 'username', 'phone', 'address')
+    list_display_links = ('username',)
+    search_fields = ('username',)
     empty_value_display = '-пусто-'
 
 
@@ -57,16 +57,16 @@ class GlovesAdmin(admin.ModelAdmin):
     # get_image.short_description = 'Изображение товара'
 
 
-class CartProductAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'cart')
-    list_display_links = ('pk',)
-    empty_value_display = '-пусто-'
+# class CartProductAdmin(admin.ModelAdmin):
+#     list_display = ('pk', 'user', 'cart')
+#     list_display_links = ('pk',)
+#     empty_value_display = '-пусто-'
 
 
-class CartAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'owner', 'total_products', 'final_price')
-    list_display_links = ('pk',)
-    empty_value_display = '-пусто-'
+# class CartAdmin(admin.ModelAdmin):
+#     list_display = ('pk', 'owner', 'total_products', 'final_price')
+#     list_display_links = ('pk',)
+#     empty_value_display = '-пусто-'
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -79,7 +79,8 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Manufacturer, ManufacturerAdmin)
-admin.site.register(CartProduct, CartProductAdmin)
-admin.site.register(Cart, CartAdmin)
+# admin.site.register(CartProduct, CartProductAdmin)
+# admin.site.register(Cart, CartAdmin)
 admin.site.register(Gloves, GlovesAdmin)
 admin.site.register(Comment, CommentAdmin)
+# admin.site.register(Order)

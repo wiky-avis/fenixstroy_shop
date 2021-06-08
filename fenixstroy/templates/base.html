@@ -31,6 +31,16 @@
   {% include 'includes/modal_search.html' %}
 
 {% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endfor %}
+{% endif %}
 
   <!-- Start Banner Hero -->
   {% include 'includes/banner_hero.html' %}

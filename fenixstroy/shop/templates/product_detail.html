@@ -202,7 +202,9 @@
                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Купить</button>
                   </div>
                   <div class="col d-grid">
+                  <a href="{% url 'add_to_cart' slug=product.slug %}">
                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Добавить в Корзину</button>
+                  </a>
                   </div>
                 </div>
               </form>

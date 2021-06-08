@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -8,8 +7,9 @@ from io import BytesIO
 from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
 
 
 def get_product_url(obj, viewname):
@@ -56,20 +56,20 @@ class LatestProducts:
     objects = LatestProductManager()
 
 
-class CustomUser(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name='Пользователь')
+class CustomUser(AbstractUser):
     phone = models.CharField(max_length=20, verbose_name='Номер телефона')
     address = models.CharField(
         max_length=255, verbose_name='Адрес доставки', null=True, blank=True)
 
+    orders = models.ManyToManyField('Order', verbose_name='Заказы покупателя', related_name='related_order')
+
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        ordering = ('user__username',)
+        ordering = ('username',)
 
     def __str__(self) -> str:
-        return f'Пользователь: {self.user.last_name} {self.user.first_name}'
+        return f'Пользователь: {self.last_name} {self.first_name}'
 
 
 class Category(models.Model):
@@ -109,8 +109,6 @@ class Manufacturer(models.Model):
 
 class Product(models.Model):
     MIN_RESOLUTION = (400, 400)
-    # MAX_RESOLUTION = (800, 800)
-    # MAX_IMAGE_SIZE = 3145728
 
     name = models.CharField(max_length=255, verbose_name='Название товара')
     slug = models.SlugField(unique=True, verbose_name='Псевдоним')
@@ -167,11 +165,6 @@ class Product(models.Model):
             raise MinResolutionErrorException(
                 'Разрешение изображения меньше минимального 400х400!')
 
-        # max_height, max_width = self.MAX_RESOLUTION
-        # if img.height > max_height or img.width > max_width:
-        #     raise MaxResolutionErrorException(
-        #         'Разрешение изображения больше максимального!')
-
         new_img = img.convert('RGB')
         resized_new_img = new_img.resize((800, 800), Image.ANTIALIAS)
         filestream = BytesIO()
@@ -188,48 +181,6 @@ class Product(models.Model):
         )
 
         super().save(*args, **kwargs)
-
-
-class CartProduct(models.Model):
-    user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, verbose_name='Покупатель')
-    cart = models.ForeignKey(
-        'Cart',
-        on_delete=models.CASCADE,
-        related_name='cart_products',
-        verbose_name='Корзина')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_obj = GenericForeignKey('content_type', 'object_id')
-    qty = models.PositiveIntegerField(
-        default=1, verbose_name='Количество')
-    final_price = models.DecimalField(
-        max_digits=9, decimal_places=2, verbose_name='Общая цена', default=0)
-
-    class Meta:
-        verbose_name_plural = 'Товары корзины'
-        verbose_name = 'Товар корзины'
-
-    def __str__(self) -> str:
-        return f'Продукт: {self.content_obj.title}(для корзины).'
-
-
-class Cart(models.Model):
-    owner = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, verbose_name='Владелец')
-    products = models.ManyToManyField(
-        CartProduct, related_name='related_cart', blank=True)
-    total_products = models.PositiveIntegerField(
-        default=0, verbose_name='Количество')
-    final_price = models.DecimalField(
-        max_digits=9, decimal_places=2, verbose_name='Общая цена')
-
-    class Meta:
-        verbose_name_plural = 'Корзины'
-        verbose_name = 'Корзина'
-
-    def __str__(self) -> str:
-        return self.id
 
 
 class Gloves(Product):
@@ -287,7 +238,7 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name='comments', verbose_name='Товар')
     author = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.CASCADE,
         related_name='comments', verbose_name='Автор')
     text = models.TextField(
@@ -304,3 +255,82 @@ class Comment(models.Model):
         ordering = ('-created',)
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+
+class CartProduct(models.Model):
+
+    user = models.ForeignKey('CustomUser', verbose_name='Покупатель', on_delete=models.CASCADE)
+    cart = models.ForeignKey('Cart', verbose_name='Корзина', on_delete=models.CASCADE, related_name='related_products')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    qty = models.PositiveIntegerField(default=1)
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая цена')
+
+    def __str__(self):
+        return "Продукт: {} (для корзины)".format(self.content_object.title)
+
+    def save(self, *args, **kwargs):
+        self.final_price = self.qty * self.content_object.price
+        super().save(*args, **kwargs)
+
+
+class Cart(models.Model):
+
+    owner = models.ForeignKey('CustomUser', null=True, verbose_name='Владелец', on_delete=models.CASCADE)
+    products = models.ManyToManyField(CartProduct, blank=True, related_name='related_cart')
+    total_products = models.PositiveIntegerField(default=0)
+    final_price = models.DecimalField(max_digits=9, default=0, decimal_places=2, verbose_name='Общая цена')
+    in_order = models.BooleanField(default=False)
+    for_anonymous_user = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Order(models.Model):
+
+    STATUS_NEW = 'new'
+    STATUS_IN_PROGRESS = 'in_progress'
+    STATUS_READY = 'is_ready'
+    STATUS_COMPLETED = 'completed'
+
+    BUYING_TYPE_SELF = 'self'
+    BUYING_TYPE_DELIVERY = 'delivery'
+
+    STATUS_CHOICES = (
+        (STATUS_NEW, 'Новый заказ'),
+        (STATUS_IN_PROGRESS, 'Заказ в обработке'),
+        (STATUS_READY, 'Заказ готов'),
+        (STATUS_COMPLETED, 'Заказ выполнен')
+    )
+
+    BUYING_TYPE_CHOICES = (
+        (BUYING_TYPE_SELF, 'Самовывоз'),
+        (BUYING_TYPE_DELIVERY, 'Доставка')
+    )
+
+    customer = models.ForeignKey(CustomUser, verbose_name='Покупатель', related_name='related_orders', on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255, verbose_name='Имя')
+    last_name = models.CharField(max_length=255, verbose_name='Фамилия')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    cart = models.ForeignKey(Cart, verbose_name='Корзина', on_delete=models.CASCADE, null=True, blank=True)
+    address = models.CharField(max_length=1024, verbose_name='Адрес', null=True, blank=True)
+    status = models.CharField(
+        max_length=100,
+        verbose_name='Статус заказ',
+        choices=STATUS_CHOICES,
+        default=STATUS_NEW
+    )
+    buying_type = models.CharField(
+        max_length=100,
+        verbose_name='Тип заказа',
+        choices=BUYING_TYPE_CHOICES,
+        default=BUYING_TYPE_SELF
+    )
+    comment = models.TextField(verbose_name='Комментарий к заказу', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True, verbose_name='Дата создания заказа')
+    order_date = models.DateField(verbose_name='Дата получения заказа', default=timezone.now)
+
+    def __str__(self):
+        return str(self.id)
