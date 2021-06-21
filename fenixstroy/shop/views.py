@@ -1,3 +1,4 @@
+from cart.forms import CartAddProductForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
@@ -7,7 +8,6 @@ from django.views.generic.base import View
 
 from .mixins import CategoryDetailMixin
 from .models import Category, Gloves, LatestProducts
-from cart.forms import CartAddProductForm
 
 User = get_user_model()
 
@@ -61,5 +61,3 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-
