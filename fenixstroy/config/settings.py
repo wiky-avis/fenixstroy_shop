@@ -29,9 +29,9 @@ INSTALLED_APPS = [
 
     'shop',
     'about',
+    'cart',
 
     'sorl.thumbnail',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +132,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CART_SESSION_ID = 'cart'
