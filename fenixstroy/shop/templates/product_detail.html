@@ -194,17 +194,26 @@
                 <li>Вес пары: {{ product.pair_weight }}</li>
               </ul>
 
-              <form action="" method="GET">
+              <form action='{% url "cart:cart_add" product.id %}' method='post'>
                 <input type="hidden" name="product-title" value="Activewear">
                 
                 <div class="row pb-3">
-                  <div class="col d-grid">
-                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Купить</button>
+                  <div class="col-auto">
+                    <ul class="list-inline pb-3">
+                      <li class="list-inline-item text-right">
+                        Количество
+                        <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                      </li>
+                      <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                      <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">{{ cart_product_form.quantity }}</span></li>
+                      <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                    </ul>
                   </div>
                   <div class="col d-grid">
-                  <a href="{% url 'add_to_cart' slug=product.slug %}">
+                  
+                    
+                    {% csrf_token %}
                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Добавить в Корзину</button>
-                  </a>
                   </div>
                 </div>
               </form>

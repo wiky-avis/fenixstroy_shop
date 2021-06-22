@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import (Category, CustomUser, Gloves,
-                     Manufacturer, Gallery, Comment)
+from .models import (Category, Comment, CustomUser, Gallery, Gloves,
+                     Manufacturer)
 
 
 class CategoryAdmin(admin.ModelAdmin):

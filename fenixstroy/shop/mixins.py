@@ -1,8 +1,8 @@
+from django.contrib.auth import get_user_model
+from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin
 
-from .models import Category, Cart
-from django.views.generic.base import View
-from django.contrib.auth import get_user_model
+from .models import Category
 
 User = get_user_model()
 

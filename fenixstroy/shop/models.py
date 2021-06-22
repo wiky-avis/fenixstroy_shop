@@ -1,29 +1,23 @@
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.urls import reverse
 import sys
 from io import BytesIO
-from PIL import Image
+
+from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+from django.urls import reverse
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
-
+from PIL import Image
 
 
 def get_product_url(obj, viewname):
     """для формирования слага"""
-    # ct_model = obj.__class__._meta.model_name
-    # return reverse(viewname, kwargs={'ct-model': ct_model, 'slug': obj.slug})
-    return reverse(viewname, kwargs={'slug': obj.slug})
+    return reverse(viewname, kwargs={'slug': obj.slug, 'id': obj.id})
 
 
 class MinResolutionErrorException(Exception):
-    pass
-
-
-class MaxResolutionErrorException(Exception):
     pass
 
 
@@ -61,8 +55,6 @@ class CustomUser(AbstractUser):
     address = models.CharField(
         max_length=255, verbose_name='Адрес доставки', null=True, blank=True)
 
-    orders = models.ManyToManyField('Order', verbose_name='Заказы покупателя', related_name='related_order')
-
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
@@ -91,7 +83,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'slug': self.slug})
+        return reverse('category_detail', kwargs={'category_slug': self.slug})
 
 
 class Manufacturer(models.Model):
@@ -152,9 +144,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return get_product_url('product_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         image = self.image
