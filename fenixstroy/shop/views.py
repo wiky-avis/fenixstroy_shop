@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, render
@@ -61,5 +60,9 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
     slug_url_kwarg = 'category_slug'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(CategoryDetailView, self).get_context_data(**kwargs)
+        category = get_object_or_404(
+            Category, slug=self.kwargs.get('category_slug')
+            )
+        context['products'] = category.category_products.all()
         return context
