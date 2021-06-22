@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'shop',
     'about',
     'cart',
+    'orders',
 
     'sorl.thumbnail',
 ]
