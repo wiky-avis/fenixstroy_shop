@@ -114,10 +114,10 @@
                           {% with product=item.product %}
                         <div class="single-cart-box">
                           <div class="cart-img">
-                            <a href="#"><img src="{{ product.image.url }}" alt="cart-image"></a>
+                            <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" alt="cart-image"></a>
                           </div>
                           <div class="cart-content">
-                            <h6><a href="product.html">{{ product.name }}</a></h6>
+                            <h6><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h6>
                             <span>{{ item.quantity }} × {{ item.total_price }} руб.</span>
                           </div>
                           <a class="del-icone" href='{% url "cart:cart_remove" product_id=product.id %}'><i class="fa fa-window-close-o"></i></a>

@@ -15,16 +15,3 @@ class CategoryDetailMixin(SingleObjectMixin):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.filter(published=True).all()
         return context
-
-
-class CartDetailMixin(SingleObjectMixin):
-
-    def get_context_data(self, request, **kwargs):
-        context = super().get_context_data(**kwargs)
-        cart = Cart(request)
-        for item in cart:
-            item['update_quantity_form'] = CartAddProductForm(
-                initial={'quantity': item['quantity'], 'update': True}
-                )
-        context['cart'] = cart
-        return context
