@@ -110,36 +110,31 @@
                     <ul class="ht-dropdown main-cart-box">
                       <li>
                         <!-- Cart Box Start -->
+                        {% for item in cart %}
+                          {% with product=item.product %}
                         <div class="single-cart-box">
                           <div class="cart-img">
-                            <a href="#"><img src="{% static 'img/menu/1.jpg' %}" alt="cart-image"></a>
+                            <a href="#"><img src="{{ product.image.url }}" alt="cart-image"></a>
                           </div>
                           <div class="cart-content">
-                            <h6><a href="product.html">Products Name</a></h6>
-                            <span>1 × $399.00</span>
+                            <h6><a href="product.html">{{ product.name }}</a></h6>
+                            <span>{{ item.quantity }} × {{ item.total_price }} руб.</span>
                           </div>
-                          <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
+                          <a class="del-icone" href='{% url "cart:cart_remove" product_id=product.id %}'><i class="fa fa-window-close-o"></i></a>
                         </div>
+                          
                         <!-- Cart Box End -->
-                        <!-- Cart Box Start -->
-                        <div class="single-cart-box">
-                          <div class="cart-img">
-                            <a href="#"><img src="{% static 'img/menu/2.jpg' %}" alt="cart-image"></a>
-                          </div>
-                          <div class="cart-content">
-                            <h6><a href="product.html">Products Name</a></h6>
-                            <span>2 × $299.00</span>
-                          </div>
-                          <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                        </div>
-                        <!-- Cart Box End -->
+                        
+                        {% endwith %}
+                      {% endfor %}
                         <!-- Cart Footer Inner Start -->
                         <div class="cart-footer fix">
-                          <h5>total :<span class="f-right">$698.00</span></h5>
+                          <h5>total :<span class="f-right">{{ cart.get_total_price }} руб.</span></h5>
                           <div class="cart-actions">
-                            <a class="checkout" href="checkout.html">Checkout</a>
+                            <a class="checkout" href='{% url "orders:order_create" %}'>Оформить заказ</a>
                           </div>
                         </div>
+
                         <!-- Cart Footer Inner End -->
                       </li>
                     </ul>

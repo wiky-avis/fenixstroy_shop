@@ -5,13 +5,13 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
 
-from .mixins import CategoryDetailMixin
+from .mixins import CartDetailMixin, CategoryDetailMixin
 from .models import Category, Gloves, LatestProducts
 
 User = get_user_model()
 
 
-class BaseView(View):
+class BaseView(CartDetailMixin, View):
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.filter(published=True).all()
