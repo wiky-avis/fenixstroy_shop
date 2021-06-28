@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Итернет-магазин :: Фениксстрой | {{ product.category }} :: {{ product.name }}{% endblock title %}
+{% block title %}{{ product.name }} :: Фениксстрой | {{ product.category }} :: {{ product.name }}{% endblock title %}
 {% block content %}
 {% load thumbnail %}
     <!-- Breadcrumb Start -->
@@ -27,7 +27,7 @@
             <div class="tab-content">
               <div id="{{ product.image.id }}" class="tab-pane active">
                 <a data-fancybox="images" href="{{ product.image.url }}">
-                    {% thumbnail product.image '270x210' crop='center' upscale=True as im %}
+                    {% thumbnail product.image '270x250' crop='center' upscale=True as im %}
                     <img src="{{ im.url }}" alt="product-view"></a>
                     {% endthumbnail %}
               </div>
