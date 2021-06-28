@@ -1,0 +1,35 @@
+{% load static %}
+<div class="best-seller-product pb-50 pb-sm-30">
+      <div class="container">
+        <div class="group-title">
+          <h2>Все товары</h2>
+        </div>
+        <!-- Best Product Activation Start -->
+        <div class="best-seller-pro-active  owl-carousel slider-right-content">
+          
+            <!-- Single Product Start -->
+            {% for product in products %}
+            <div class="single-product">
+              <div class="pro-img">
+                <a href="{{ product.get_absolute_url }}"><img class="img" src="{{ product.image.url }}" alt="product-image"></a>
+              </div>
+              <div class="pro-content">
+                <div class="product-rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+                <p><span class="price">{{ product.price }} руб.</p>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- Single Product End -->
+          
+        </div>
+        <!-- Best Product Activation End -->
+      </div>
+      <!-- Container End -->
+    </div>

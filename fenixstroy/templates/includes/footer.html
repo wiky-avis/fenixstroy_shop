@@ -1,95 +1,102 @@
-<footer class="bg-dark" id="tempaltemo_footer">
-    <div class="container">
-      <div class="row">
+{% load static %}
+<footer class="off-white-bg">
+      <div class="footer-top pt-50 pb-60">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 mr-auto ml-auto">
+              <div class="newsletter text-center">
+                <div class="main-news-desc">
+                   <div class="news-desc">
+                     <h3>Подпишитесь на наши обновления</h3>
+                     <p>Получайте на email обновления о наших последних поступлениях и специальных предложениях.</p>
+                   </div>
+                </div>
+                <div class="newsletter-box">
+                  <form action="#">
+                    <input class="subscribe" placeholder="Введите свой email" name="email" id="subscribe" type="text">
+                    <button type="submit" class="submit">Подписаться</button>
+                  </form>
+                </div>
+               </div>              
+            </div>
+          </div>          
+          <div class="row">
+            <!-- Single Footer Start -->
+            <div class="col-lg-4  col-md-7 col-sm-6">
+              <div class="single-footer">
+                <h3>Наши Контакты</h3>
+                <div class="footer-content">
+                  <div class="loc-address">
+                    <span><i class="fa fa-map-marker"></i>Адрес: 143960, Московская обл., г. Реутов, ул. пр-кт Мира 40</span>
+                    <span><i class="fa fa-envelope-o"></i>Напишите нам: yourinfo@example.com</span>
+                    <span><i class="fa fa-phone"></i>Телефон: +7 925 333 3333</span>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <!-- Single Footer Start -->
+            <!-- Single Footer Start -->
+            <div class="col-lg-2  col-md-5 col-sm-6 footer-full">
+              <div class="single-footer">
+                <h3 class="footer-title">Информация</h3>
+                <div class="footer-content">
+                  <ul class="footer-list">
+                    <li><a href="#">Схема проезда</a></li>
+                    <li><a href="#">Условия доставки</a></li>
+                    <li><a href="#">Гарантия</a></li>
+                    <li><a href="#">Способ оплаты</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Single Footer Start -->
+            <!-- Single Footer Start -->
+            <div class="col-lg-2  col-md-4 col-md-4 col-sm-6 footer-full">
+              <div class="single-footer">
+                <h3 class="footer-title">Мой Профиль</h3>
+                <div class="footer-content">
+                  <ul class="footer-list">
+                    <li><a href="account.html">Профиль</a></li>
+                    <li><a href="#">Заказы</a></li>
+                    <li><a href="#">Войти</a></li>
+                    <li><a href="#">Статус заказа</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Single Footer Start -->
 
-        <div class="col-md-4 pt-5">
-          <h2 class="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
-          <ul class="list-unstyled text-light footer-link-list">
-            <li>
-              <i class="fas fa-map-marker-alt fa-fw"></i>
-              123 Consectetur at ligula 10660
-            </li>
-            <li>
-              <i class="fa fa-phone fa-fw"></i>
-              <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-            </li>
-            <li>
-              <i class="fa fa-envelope fa-fw"></i>
-              <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
-            </li>
-          </ul>
+            <!-- Single Footer Start -->
+            <div class="col-lg-2 col-md-4 col-sm-6 footer-full">
+              <div class="single-footer">
+                <h3 class="footer-title">Часто задаваемые вопросы</h3>
+                <div class="footer-content">
+                  <ul class="footer-list">
+                    <li><a href="#">Как сделать заказ</a></li>
+                    <li><a href="#">Как зарегистрироваться</a></li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Single Footer Start -->
+          </div>
+          <!-- Row End -->
         </div>
-
-        <div class="col-md-4 pt-5">
-          <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
-          <ul class="list-unstyled text-light footer-link-list">
-            <li><a class="text-decoration-none" href="#">Luxury</a></li>
-            <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-            <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-            <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-            <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-            <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
-            <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
-          </ul>
-        </div>
-
-        <div class="col-md-4 pt-5">
-          <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
-          <ul class="list-unstyled text-light footer-link-list">
-            <li><a class="text-decoration-none" href="#">Home</a></li>
-            <li><a class="text-decoration-none" href="#">About Us</a></li>
-            <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
-            <li><a class="text-decoration-none" href="#">FAQs</a></li>
-            <li><a class="text-decoration-none" href="#">Contact</a></li>
-          </ul>
-        </div>
-
+        <!-- Container End -->
       </div>
+      <!-- Footer Top End -->
+      <!-- Footer Bottom Start -->
+      <div class="footer-bottom off-white-bg2">
+        <div class="container">
+          <div class="footer-bottom-content">
+            <p class="copy-right-text">&copy; {% now 'Y' %} Фениксстрой  -  Вы принимаете условия политики конфиденциальности и пользовательского соглашения каждый раз, когда оставляете свои данные
+                в любой форме обратной связи на сайте Фениксстрой.ру</p>
 
-      <div class="row text-light mb-4">
-        <div class="col-12 mb-3">
-          <div class="w-100 my-3 border-top border-light"></div>
-        </div>
-        <div class="col-auto me-auto">
-          <ul class="list-inline text-left footer-icons">
-            <li class="list-inline-item border border-light rounded-circle text-center">
-              <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-            </li>
-            <li class="list-inline-item border border-light rounded-circle text-center">
-              <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-            </li>
-            <li class="list-inline-item border border-light rounded-circle text-center">
-              <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
-            </li>
-            <li class="list-inline-item border border-light rounded-circle text-center">
-              <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-auto">
-          <label class="sr-only" for="subscribeEmail">Email address</label>
-          <div class="input-group mb-2">
-            <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
-            <div class="input-group-text btn-success text-light">Subscribe</div>
           </div>
         </div>
+        <!-- Container End -->
       </div>
-    </div>
-
-    <div class="w-100 bg-black py-3">
-      <div class="container">
-        <div class="row pt-2">
-          <div class="col-12">
-            <p class="text-left text-light">
-              Вы принимаете условия политики конфиденциальности и пользовательского соглашения каждый раз, когда оставляете свои данные
-                в любой форме обратной связи на сайте Фениксстрой.ру
-            </p>
-            <p class="text-left text-light">
-              &copy; {% now 'Y' %} Фениксстрой
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-</footer>
+      <!-- Footer Bottom End -->
+    </footer>

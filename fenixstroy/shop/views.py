@@ -18,9 +18,10 @@ class BaseView(View):
         products = LatestProducts.objects.get_products_for_main_page(
             'gloves',
             whith_respect_to='gloves')
+        cart_product_form = CartAddProductForm()
         return render(
             request, 'base.html', {
-                'categories': categories, 'products': products})
+                'categories': categories, 'products': products, 'cart_product_form': cart_product_form})
 
 
 class ShopView(View):

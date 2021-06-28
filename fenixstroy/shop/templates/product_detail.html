@@ -2,230 +2,240 @@
 {% load static %}
 {% block title %}Итернет-магазин :: Фениксстрой | {{ product.category }} :: {{ product.name }}{% endblock title %}
 {% block content %}
-  <!-- Open Content -->
-  <section class="bg-light">
-  
-    <div class="container pb-5">
-      <div class="row">
-      <!-- Open breadcrumb -->
-      <nav aria-label="breadcrumb" class='mt-3'>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'base' %}">Главная</a></li>
-            <li class="breadcrumb-item"><a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
-        </ol>
-      </nav>
-      <!-- End breadcrumb -->
-        <div class="col-lg-5 mt-2">
-          <div class="card mb-3">
-            <img class="card-img img-fluid" src="{{ product.image.url }}" alt="Card image cap" id="product-detail">
-          </div>
-          <div class="row">
-            <!--Start Controls-->
-            <div class="col-1 align-self-center">
-              <a href="#multi-item-example" role="button" data-bs-slide="prev">
-                <i class="text-dark fas fa-chevron-left"></i>
-                <span class="sr-only">Previous</span>
-              </a>
-            </div>
-            <!--End Controls-->
-            <!--Start Carousel Wrapper-->
-            <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
-              <!--Start Slides-->
-              <div class="carousel-inner product-links-wap" role="listbox">
-
-                <!--First slide-->
-                <div class="carousel-item active">
-                  <div class="row">
-                  {% for image in product.images.all %}
-                    <div class="col-4">
-                      <a href="#">
-                        <img class="card-img img-fluid" src="{{ image }}" alt="Product Image 1">
-                      </a>
-                    </div>
-                  {% endfor %}
-                  </div>
-                </div>
-                <!--/.First slide-->
-
-                <!--Second slide-->
-                <div class="carousel-item">
-                  <div class="row">
-                  {% for image in product.images.all %}
-                    <div class="col-4">
-                      <a href="#">
-                        <img class="card-img img-fluid" src="{{ image }}" alt="Product Image 4">
-                      </a>
-                    </div>
-                  {% endfor %}
-                    
-                  </div>
-                </div>
-                <!--/.Second slide-->
-
-                <!--Third slide-->
-                <div class="carousel-item">
-                  <div class="row">
-                    {% for image in product.images.all %}
-                    <div class="col-4">
-                      <a href="#">
-                        <img class="card-img img-fluid" src="{{ image }}" alt="Product Image 4">
-                      </a>
-                    </div>
-                  {% endfor %}
-                    
-                  </div>
-                </div>
-                <!--/.Third slide-->
-              </div>
-              <!--End Slides-->
-            </div>
-            <!--End Carousel Wrapper-->
-            <!--Start Controls-->
-            <div class="col-1 align-self-center">
-              <a href="#multi-item-example" role="button" data-bs-slide="next">
-                <i class="text-dark fas fa-chevron-right"></i>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-            <!--End Controls-->
-          </div>
-        </div>
-        <!-- col end -->
-        <div class="col-lg-7 mt-2">
-          <div class="card">
-            <div class="card-body">
-              <h1 class="h2">{{ product.name }}</h1>
-
-              <!--Start Rating and Comments-->
-              <p class="py-2">
-
-                <!--Start Stars-->
-                {% if int_rating >= 1 and int_rating < 2 %}
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                {% elif int_rating >= 2 and int_rating < 3 %}
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                {% elif int_rating >= 3 and int_rating < 4 %}
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                {% elif int_rating >= 4 and int_rating < 5 %}
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                {% elif int_rating == 5 %}
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                  <i class="fa fa-star text-warning"></i>
-                {% else %}
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                  <i class="fa fa-star text-secondary"></i>
-                {% endif %}
-                <!--End Stars-->
-
-                <span class="list-inline-item text-dark">Рейтинг {{ int_rating }} | {{ product.comments.count }} Комментарии</span>
-              </p>
-              <!--End Rating and Comments-->
-
-              <p class="h3 py-2">Артикул: {{ product.article_number }}</p>
-              <p class="h3 py-2">Цена: {{ product.price }} руб.</p>
-
-            <!--Start Quantity-->
-              <div class="col-auto">
-                    <ul class="list-inline pb-3">
-                      <li class="list-inline-item text-right">
-                        Количество
-                        <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                      </li>
-                      <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                      <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
-                      <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                    </ul>
-              </div>
-            <!--End Quantity-->
-
-              
-              <ul class="list-inline">
-                <li class="list-inline-item">
-                  <h6>Производитель: </h6>
-                </li>
-                <li class="list-inline-item">
-                  <p class="text-muted"><strong>{{ product.manufacturer }}</strong></p>
-                </li>
-              </ul>
-
-              <h6>Описание:</h6>
-              <p>{{ product.desctriptions }}</p>
-              <ul class="list-inline">
-                <li class="list-inline-item">
-                  <h6>Доступные цвета:</h6>
-                </li>
-                <li class="list-inline-item">
-                  <p class="text-muted"><strong>{{ product.color }}</strong></p>
-                </li>
-              </ul>
-
-              <h6>Характеристики:</h6>
-              <ul class="list-unstyled pb-3">
-                <li>Свойства товара: {{ product.features }}</li>
-                <li>Материал основы: {{ product.material }}</li>
-                <li>Материал покрытия: {{ product.coating_material }}</li>
-                <li>Тип покрытия: {{ product.type_coating }}</li>
-                <li>Размер: {{ product.size }}</li>
-                <li>Количество в упаковке: {{ product.quantity_pack }}</li>
-                <li>Минимальная упаковка: {{ product.minimum_packaging }}</li>
-                <li>Вес пары: {{ product.pair_weight }}</li>
-              </ul>
-
-              <form action='{% url "cart:cart_add" product.id %}' method='post'>
-                <input type="hidden" name="product-title" value="Activewear">
-                
-                <div class="row pb-3">
-                  <div class="col-auto">
-                    <ul class="list-inline pb-3">
-                      <li class="list-inline-item text-right">
-                        Количество
-                        <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                      </li>
-                      <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                      <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">{{ cart_product_form.quantity }}</span></li>
-                      <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                    </ul>
-                  </div>
-                  <div class="col d-grid">
-                  
-                    
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Добавить в Корзину</button>
-                  </div>
-                </div>
-
-              </form>
-
-            </div>
-          </div>
+{% load thumbnail %}
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-area ptb-60 ptb-sm-30">
+      <div class="container">
+        <div class="breadcrumb">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li class="active"><a href="product.html">Product</a></li>
+          </ul>
         </div>
       </div>
+      <!-- Container End -->
     </div>
-  </section>
-  <!-- Close Content -->
+    <!-- Breadcrumb End -->
+    <!-- Product Thumbnail Start -->
+    <div class="main-product-thumbnail pb-60">
+      <div class="container">
+        <div class="row">
+          <!-- Main Thumbnail Image Start -->
+          <div class="col-lg-5">
+            <!-- Thumbnail Large Image start -->
+            <div class="tab-content">
+              <div id="{{ product.image.id }}" class="tab-pane active">
+                <a data-fancybox="images" href="{{ product.image.url }}">
+                    {% thumbnail product.image '400x400' crop='center' upscale=True as im %}
+                    <img src="{{ im.url }}" alt="product-view"></a>
+                    {% endthumbnail %}
+              </div>
+              {% for image in product.images.all %}
+              <div id="{{ image.id }}" class="tab-pane">
+                <a data-fancybox="images" href="{{ image }}">
+                    <img src="{{ image }}" alt="product-view"></a>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- Thumbnail Large Image End -->
 
+            <!-- Thumbnail Image End -->
+            <div class="product-thumbnail">
+              <div class="thumb-menu nav">
+                  <a class="active" data-toggle="tab" href="#{{ product.image.id }}"> <img src="{{ product.image.url }}" alt="product-thumbnail"></a>
+                  {% for image in product.images.all %}
+                    <a data-toggle="tab" href="#{{ image.id }}"> <img src="{{ image }}" alt="product-thumbnail"></a>
+                  {% endfor %}
+              </div>
+            </div>
+            <!-- Thumbnail image end -->
+          </div>
+          <!-- Main Thumbnail Image End -->
+          <!-- Thumbnail Description Start -->
+          <div class="col-lg-7">
+            <div class="thubnail-desc fix">
+              <h3 class="product-header">{{ product.name }}</h3>
+              <p>Артикул: {{ product.article_number }}</p>
+              <div class="rating-summary fix mtb-10">
+                <div class="rating f-left">
+                  <!--Start Stars-->
+                  {% include 'includes/stars.html' %}
+                  <!--End Stars-->
+                </div>
+                <div class="rating-feedback f-left">
+                  <a href="#">(Отзывов: {{ product.comments.count }})</a>
+                  <a href="#">Добавить отзыв</a>
+                </div>
+              </div>
+              <ul class="list-inline">
+        <li class="list-inline-item">
+          <h6>Производитель: </h6>
+        </li>
+        <li class="list-inline-item">
+          <p class="text-muted"><strong>{{ product.manufacturer }}</strong></p>
+        </li>
+        </ul>
+              <div class="pro-price mb-10">
+                <p><span class="price">Цена: {{ product.price }} руб.</p>
+              </div>
+              
+              <div class="box-quantity">
+                <form action='{% url "cart:cart_add" product.id %}' method='post'>
+                <input type="hidden" name="product-title" value="Activewear">
+                  {{ cart_product_form.quantity }}
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Заказать</button>
+                </form>
+              </div>
+              
+              <p class="ptb-20">{{ product.desctriptions|linebreaksbr|truncatechars:200 }}</p>
+            </div>
+          </div>
+          <!-- Thumbnail Description End -->
+        </div>
+        <!-- Row End -->
+      </div>
+      <!-- Container End -->
+    </div>
+    <!-- Product Thumbnail End -->
+    <!-- Product Thumbnail Description Start -->
+    <div class="thumnail-desc pb-60">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="main-thumb-desc nav">
+              <li><a class="active" data-toggle="tab" href="#dtail">Описание товара</a></li>
+              <li><a data-toggle="tab" href="#review">Отзывы {{ product.comments.count }}</a></li>
+            </ul>
+            <!-- Product Thumbnail Tab Content Start -->
+            <div class="tab-content thumb-content border-default">
+              <div id="dtail" class="tab-pane in active">
+                <p>{{ product.desctriptions|linebreaksbr }}</p>
+                <ul class="tab-list-item">
+                  <li>Свойства товара: {{ product.features }}</li>
+                  <li>Материал основы: {{ product.material }}</li>
+                  <li>Материал покрытия: {{ product.coating_material }}</li>
+                  <li>Тип покрытия: {{ product.type_coating }}</li>
+                  <li>Размер: {{ product.size }}</li>
+                  <li>Количество в упаковке: {{ product.quantity_pack }}</li>
+                  <li>Минимальная упаковка: {{ product.minimum_packaging }}</li>
+                  <li>Вес пары: {{ product.pair_weight }}</li>
+                  <li>Производитель: {{ product.manufacturer }}</li>
+                  <li>Цвета: {{ product.color }}</li>
+                </ul>
+              </div>
+              <div id="review" class="tab-pane">
+                <!-- Reviews Start -->
+                <div class="review">
+                  
+                  <h4 class="review-mini-title">Jantrik</h4>
+                  <ul class="review-list">
+                    <!-- Single Review List Start -->
+                    <li>
+                      <span>Quality</span>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <label>Jantrik</label>
+                    </li>
+                    <!-- Single Review List End -->
+                    <!-- Single Review List Start -->
+                    <li>
+                      <span>price</span>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <label>Review by <a href="https://themeforest.net/user/Jantrik">Jantrik</a></label>
+                    </li>
+                    <!-- Single Review List End -->
+                    <!-- Single Review List Start -->
+                    <li>
+                      <span>value</span>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                      <label>Posted on 7/20/18</label>
+                    </li>
+                    <!-- Single Review List End -->
+                  </ul>
+                </div>
+                <!-- Reviews End -->
+                <!-- Reviews Start -->
+                <div class="review border-default universal-padding mt-30">
+                  <h2 class="review-title mb-30">You're reviewing: <br><span>Go-Get'r Pushup Grips</span></h2>
+                  <p class="review-mini-title">your rating</p>
+                  <ul class="review-list">
+                    <!-- Single Review List Start -->
+                    <li>
+                      <span>Quality</span>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </li>
+                    <!-- Single Review List End -->
+                    <!-- Single Review List Start -->
+                    <li>
+                      <span>price</span>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </li>
+                    <!-- Single Review List End -->
+                    <!-- Single Review List Start -->
+                    <li>
+                      <span>value</span>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                    </li>
+                    <!-- Single Review List End -->
+                  </ul>
+                  <!-- Reviews Field Start -->
+                  <div class="riview-field mt-40">
+                    <form autocomplete="off" action="#">
+                      <div class="form-group">
+                        <label class="req" for="sure-name">Nickname</label>
+                        <input type="text" class="form-control" id="sure-name" required="required">
+                      </div>
+                      <div class="form-group">
+                        <label class="req" for="subject">Summary</label>
+                        <input type="text" class="form-control" id="subject" required="required">
+                      </div>
+                      <div class="form-group">
+                        <label class="req" for="comments">Review</label>
+                        <textarea class="form-control" rows="5" id="comments" required="required"></textarea>
+                      </div>
+                      <button type="submit" class="btn-submit">Submit Review</button>
+                    </form>
+                  </div>
+                  <!-- Reviews Field Start -->
+                </div>
+                <!-- Reviews End -->
+              </div>
+            </div>
+            <!-- Product Thumbnail Tab Content End -->
+          </div>
+        </div>
+        <!-- Row End -->
+      </div>
+      <!-- Container End -->
+    </div>
+    <!-- Product Thumbnail Description End -->
+    <!-- Realted Product Start -->
+    {% include 'includes/related-product.html' %}
+    <!-- Realted Product End -->
+    
 {% endblock content %}
-

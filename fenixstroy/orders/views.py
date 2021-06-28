@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render
 
 from .forms import OrderCreateForm
 from .models import Order, OrderItem
+from django.core.mail import send_mail
 
 
 @staff_member_required
@@ -25,6 +26,12 @@ def order_create(request):
                     price=item['price'],
                     quantity=item['quantity']
                     )
+                # send_mail(
+                #     'Заказ на Fenixstroy',
+                #     'Ваш заказ принят',
+                #     'admin@fenixstoy.ru',
+                #     ['test@test.ru'],
+                #     fail_silently=False)
             # очистка корзины
             cart.clear()
             return render(

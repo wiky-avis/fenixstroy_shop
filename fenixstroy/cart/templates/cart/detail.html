@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load thumbnail %}
 {% block title %}
     Your shopping cart
 {% endblock %}
@@ -22,17 +23,19 @@
                 <tr>
                     <td>
                         <a href="{{ product.get_absolute_url }}">
-                            <img src="
+                        {% thumbnail product.image '150x150' crop='center' upscale=True as im %}
+                            <img class="img" src='
                                 {% if product.image %}
-                                    {{ product.image.url }}
+                                    {{ im.url }}
                                 {% else %}
                                     {% static "img/no_image.png" %}
-                                {% endif %}">
+                                {% endif %}'>
+                        {% endthumbnail %}
                         </a>
                     </td>
                     <td>{{ product.name }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td><a href="{% url "cart:cart_remove" product.id%}">Remove</a></td>
+                    <td><a href='{% url "cart:cart_remove" product_id=product.id %}'>Удалить</a></td>
                     <td class="num">${{ item.price }}</td>
                     <td class="num">${{ item.total_price }}</td>
                 </tr>
@@ -41,13 +44,13 @@
         <tr class="total">
             <td>Total</td>
             <td colspan="4"></td>
-            <td class="num">${{ cart.get_total_price }}</td>
+            <td class="num">{{ cart.get_total_price }} руб.</td>
         </tr>
         </tbody>
     </table>
     <p class="text-right">
         <a href='{% url "shop" %}' class="button light">Continue shopping</a>
-        <a href="{% url "orders:order_create" %}" class="button">
+        <a href='{% url "orders:order_create" %}' class="button">
             Checkout
         </a>
     </p>

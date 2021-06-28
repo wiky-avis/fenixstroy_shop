@@ -1,0 +1,64 @@
+{% load static %}
+<div class="new-pro-content">
+              <div class="pro-tab-title border-line">
+                <!-- Featured Product List Item Start -->
+                <div class="group-title">
+                  <h2>Акции</h2>
+                </div>
+                <!-- Featured Product List Item End -->
+              </div>
+              <div class="tab-content product-tab-content jump">
+                <div id="new-arrival" class="tab-pane active">
+                  <!-- New Products Activation Start -->
+                  <div class="new-pro-active owl-carousel">
+                    <!-- Single Product Start -->
+                    {% for product in products %}
+                    <div class="single-product">
+                      <!-- Product Image Start -->
+                      <div class="pro-img">
+                        <a href="{{ product.get_absolute_url }}">
+                          <img class="primary-img" src="{{ product.image.url }}" alt="single-product">
+                        </a>
+                      </div>
+                      <!-- Product Image End -->
+                      <!-- Product Content Start -->
+                      <div class="pro-content">
+                        <div class="product-rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>                
+                        <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+                        <p><span class="price">{{ product.price }} руб.</p>
+
+                        <form action='{% url "cart:cart_add" product.id %}' method='post'>
+
+                          <div class="pro-actions">
+                            <div class="actions-secondary">
+                            <input type="hidden" name="product-title" value="Activewear">
+                              {{ cart_product_form.quantity }}
+                              {% csrf_token %}
+                            <button type="submit" class="btn btn-light" name="submit" value="addtocard">Add To Cart</button>
+                              
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- Product Content End -->
+                    </div>
+                    {% endfor %}                
+                    <!-- Single Product End -->
+                    
+                  </div>
+                  <!-- New Products Activation End -->
+                </div>
+                <!-- New Products End -->
+                
+              </div>
+              <!-- Tab-Content End -->
+              <div class="single-banner zoom mt-30 mt-sm-10">
+              <a href="#"><img src="{% static 'img/banner/tab-banner.jpg' %}" alt="slider-banner"></a>
+            </div>
+            </div>
