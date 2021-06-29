@@ -1,3 +1,5 @@
+from cart.cart import Cart
+from cart.forms import CartAddProductForm
 from django.contrib.auth import get_user_model
 from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin
