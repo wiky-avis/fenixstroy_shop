@@ -12,5 +12,8 @@ class OrderCreateForm(forms.ModelForm):
             'email',
             'address',
             'postal_code',
-            'city'
+            'city',
+            'phone',
+            'company_name',
+            'company_details'
             ]

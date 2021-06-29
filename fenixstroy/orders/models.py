@@ -5,14 +5,18 @@ from shop.models import Gloves
 
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField()
-    address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20)
+    address = models.CharField(max_length=250, null=True, blank=True)
+    postal_code = models.CharField(max_length=20, null=True, blank=True)
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+    company_name = models.CharField(max_length=250, null=True, blank=True)
+    company_details = models.FileField(
+        upload_to='files/', null=True, blank=True)
 
     class Meta:
         ordering = ('-created',)

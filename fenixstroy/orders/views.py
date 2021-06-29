@@ -16,7 +16,8 @@ def admin_order_detail(request, order_id):
 def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
-        form = OrderCreateForm(request.POST)
+        form = OrderCreateForm(
+            request.POST or None, files=request.FILES or None)
         if form.is_valid():
             order = form.save()
             for item in cart:
@@ -26,13 +27,6 @@ def order_create(request):
                     price=item['price'],
                     quantity=item['quantity']
                     )
-                # send_mail(
-                #     'Заказ на Fenixstroy',
-                #     'Ваш заказ принят',
-                #     'admin@fenixstoy.ru',
-                #     ['test@test.ru'],
-                #     fail_silently=False)
-            # очистка корзины
             cart.clear()
             return render(
                 request, 'orders/order/created.html', {'order': order}
