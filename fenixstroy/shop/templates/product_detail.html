@@ -8,9 +8,9 @@
       <div class="container">
         <div class="breadcrumb">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li class="active"><a href="product.html">Product</a></li>
+            <li><a href="{% url 'base' %}">Главная</a></li>
+            <li><a href="{% url 'shop' %}">Магазин</a></li>
+            <li class="active"><a href="{{ product.get_url_absolute }}">{{ product.name }}</a></li>
           </ul>
         </div>
       </div>

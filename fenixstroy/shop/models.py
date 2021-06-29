@@ -96,6 +96,9 @@ class Manufacturer(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('manufacture_detail', kwargs={'manufacture_slug': self.slug})
+
 
 class Product(models.Model):
     MIN_RESOLUTION = (400, 400)

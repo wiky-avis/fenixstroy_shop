@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Магазин :: Фениксстрой{% endblock title %}
+{% block title %}{{ manufacture.name }} :: Фениксстрой{% endblock title %}
 {% block content %}
 {% load thumbnail %}
 <!-- Breadcrumb Start -->
@@ -9,7 +9,8 @@
         <div class="breadcrumb">
           <ul>
             <li><a href='{% url "base" %}'>Главная</a></li>
-            <li class="active"><a href='{% url "shop" %}'>Магазин</a></li>
+            <li><a href='{% url "shop" %}'>Магазин</a></li>
+            <li class="active"><a href='{{ manufacture.get_url_absolute }}'>{{ manufacture.name }}</a></li>
           </ul>
         </div>
       </div>

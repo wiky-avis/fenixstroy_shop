@@ -77,4 +77,22 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
             Category, slug=self.kwargs.get('category_slug')
             )
         context['products'] = category.category_products.all()
+        context['manufacturer'] = Manufacturer.objects.all()
+        return context
+
+
+class ManufactureDetailView(CategoryDetailMixin, DetailView):
+    model = Manufacturer
+    queryset = Manufacturer.objects.all()
+    context_object_name = 'manufacture'
+    template_name = 'manufacturer.html'
+    slug_url_kwarg = 'manufacture_slug'
+
+    def get_context_data(self, **kwargs):
+        context = super(ManufactureDetailView, self).get_context_data(**kwargs)
+        manufacture = get_object_or_404(
+            Manufacturer, slug=self.kwargs.get('manufacture_slug')
+            )
+        context['products'] = manufacture.manufacturer_products.all()
+        context['manufacturer'] = Manufacturer.objects.all()
         return context
