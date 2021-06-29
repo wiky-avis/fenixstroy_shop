@@ -3,7 +3,19 @@
 {% block title %}Спасибо за заказ :: Фениксстрой{% endblock title %}
 {% block content %}
 
-  <h1>Спасибо!</h1>
-  <p>Ваш заказ принят. Ваш номер заказа
-    <strong>{{ order.id }}</strong>.</p>
+<div class="pb-60 pt-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-wrapper text-center">
+                    <div class="error-text">
+                        <h2>Спасибо!</h2>
+                        <p>Ваш заказ принят. Ваш номер заказа <strong>{{ order.id }}</strong>.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
