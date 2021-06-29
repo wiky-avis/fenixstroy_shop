@@ -123,20 +123,9 @@
             </div>
             <!--Breadcrumb and Page Show Start -->
             <div class="pagination-box fix">
-              <ul class="blog-pagination ">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-              </ul>
-              <div class="toolbar-sorter-footer">
-                <label>show</label>
-                <select class="sorter" name="sorter">
-                  <option value="Position" selected="selected">12</option>
-                  <option value="Product Name">15</option>
-                  <option value="Price">30</option>
-                </select>
-                <span>per page</span>
-              </div>
+              {% if page.has_other_pages %}
+                {% include 'includes/paginator.html' %}
+              {% endif %}
             </div>
             <!--Breadcrumb and Page Show End -->
           </div>

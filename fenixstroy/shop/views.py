@@ -34,15 +34,16 @@ class ShopView(View):
         products = Gloves.objects.filter(published=True).all()
         manufacturer = Manufacturer.objects.all()
         cart_product_form = CartAddProductForm()
-        # paginator = Paginator(products_list, 10)
-        # page_number = request.GET.get('products')
-        # products = paginator.get_page(page_number)
+        paginator = Paginator(products, 10)
+        page_number = request.GET.get('page')
+        page = paginator.get_page(page_number)
         return render(
             request, 'shop.html', {
                 'categories': categories,
                 'products': products,
                 'manufacturer': manufacturer,
-                'cart_product_form': cart_product_form})
+                'cart_product_form': cart_product_form,
+                'page': page})
 
 
 class ProductDetailView(CategoryDetailMixin, DetailView):
