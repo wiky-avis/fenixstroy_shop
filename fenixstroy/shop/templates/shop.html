@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Магазин :: Фениксстрой{% endblock title %}
+{% block content %}
+{% load thumbnail %}
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-area ptb-60 ptb-sm-30">
+      <div class="container">
+        <div class="breadcrumb">
+          <ul>
+            <li><a href='{% url "base" %}'>Главная</a></li>
+            <li class="active"><a href='{% url "shop" %}'>Магазин</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Container End -->
+    </div>
+    <!-- Breadcrumb End -->
+    <!-- Shop Page Start -->
+    <div class="main-shop-page pb-60">
+      <div class="container">
+        <!-- Row End -->
+        <div class="row">
+          <!-- Sidebar Shopping Option Start -->
+          <div class="col-lg-3  order-2">
+            <div class="sidebar white-bg">
+              <div class="single-sidebar">
+                <div class="group-title">
+                  <h2>категории</h2>
+                </div>
+                {% for category in categories %}
+                <ul>
+                  <li><a href='{% url "category_detail" category.slug %}'>{{ category.name }} ({{ category.category_products.count }})</a></li>
+                </ul>
+                {% endfor %}
+              </div>
+
+              <div class="single-sidebar">
+                <div class="group-title">
+                  <h2>производители</h2>
+                </div>
+                <ul class="manufactures-list">
+                {% for manufacture in manufacturer %}
+                  <li><a href="#">{{ manufacture.name }} ({{ manufacture.manufacturer_products.count }})</a></li>
+                {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Sidebar Shopping Option End -->          
+          <!-- Product Categorie List Start -->
+          <div class="col-lg-9 order-lg-2">
+            <!-- Grid & List View Start -->
+            <div class="grid-list-top border-default universal-padding fix mb-30">
+              
+              <!-- Toolbar Short Area Start -->
+              <div class="main-toolbar-sorter f-right">
+                <div class="toolbar-sorter">
+                  <label>sort by</label>
+                  <select class="sorter" name="sorter">
+                    <option value="Position" selected="selected">position</option>
+                    <option value="Product Name">Product Name</option>
+                    <option value="Price">Price</option>
+                  </select>
+                  <span><a href="#"><i class="fa fa-arrow-up"></i></a></span>
+                </div>
+              </div>
+              <!-- Toolbar Short Area End -->
+            </div>
+            <!-- Grid & List View End -->
+            <div class="main-categorie">
+              <!-- Grid & List Main Area End -->
+              <div class="tab-content fix">
+
+                  {% for product in products %}
+
+                <!-- #grid view End -->
+                <div id="list-view" class="tab-pane active">
+
+
+                  <!-- Single Product Start -->
+                  <div class="single-product">
+                    <!-- Product Image Start -->
+                    <div class="pro-img">
+                      <a href="{{ product.get_absolute_url }}">
+                        <img class="primary-img" src="{{ product.image.url }}" alt="single-product">
+                        <img class="secondary-img" src="{{ product.image.url }}" alt="single-product">
+                      </a>
+                    </div>
+                    <!-- Product Image End -->
+                    <!-- Product Content Start -->
+                    <div class="pro-content">
+                      <div class="product-rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>                
+                      <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+                      <p><span class="price">{{ product.price }} руб.</del></p>
+                      <p>{{ product.desctriptions|linebreaksbr|truncatechars:200 }}</p>
+                      <div class="pro-actions">
+                        <div class="actions-secondary">
+                          <form action='{% url "cart:cart_add" product.id %}' method='post'>
+                            <input type="hidden" name="product-title" value="Activewear">
+                              {{ cart_product_form.quantity }}
+                              {% csrf_token %}
+                          <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Заказать</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Product Content End -->
+                  </div>
+                  {% endfor %}
+
+
+                </div>
+                <!-- #list view End -->
+              </div>
+              <!-- Grid & List Main Area End -->
+            </div>
+            <!--Breadcrumb and Page Show Start -->
+            <div class="pagination-box fix">
+              <ul class="blog-pagination ">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+              </ul>
+              <div class="toolbar-sorter-footer">
+                <label>show</label>
+                <select class="sorter" name="sorter">
+                  <option value="Position" selected="selected">12</option>
+                  <option value="Product Name">15</option>
+                  <option value="Price">30</option>
+                </select>
+                <span>per page</span>
+              </div>
+            </div>
+            <!--Breadcrumb and Page Show End -->
+          </div>
+          <!-- product Categorie List End -->
+        </div>
+        <!-- Row End -->
+      </div>
+      <!-- Container End -->
+    </div>
+    <!-- Shop Page End -->
+{% endblock content %}

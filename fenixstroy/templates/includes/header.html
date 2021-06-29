@@ -49,46 +49,17 @@
               <div class="middle-menu pull-right">
                 <nav>
                   <ul class="middle-menu-list">
-                    <li><a href="index.html">Главная<i class="fa fa-angle-down"></i></a>
+                    <li><a href='{% url "base" %}'>Главная<i class="fa fa-angle-down"></i></a>
 
                     </li>
-                    <li><a href="about.html">О нас</a></li>                    
-                    <li><a href="shop.html">Магазин<i class="fa fa-angle-down"></i></a>
-                      <!-- Home Version Dropdown Start -->
-                      <ul class="ht-dropdown dropdown-style-two">
-                        <li><a href="shop.html">Shop</a>
-                          <!-- Start Two Step -->
-                          <ul class="ht-dropdown dropdown-style-two sub-menu">
-                            <li><a href="shop.html">Product Category Name</a>
-                              <!-- Start Three Step -->
-                              <ul class="ht-dropdown dropdown-style-two sub-menu">
-                                <li><a href="shop.html">Product Category Name</a></li>
-                                <li><a href="shop.html">Product Category Name</a></li>
-                                <li><a href="shop.html">Product Category Name</a></li>
-                              </ul>
-                            </li>
-                            <li><a href="shop.html">Product Category Name</a></li>
-                            <li><a href="shop.html">Product Category Name</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="product.html">product details Page</a></li>
-                        <li><a href="compare.html">Compare Page</a></li>
-                        <li><a href="cart.html">Cart Page</a></li>
-                        <li><a href="checkout.html">Checkout Page</a></li>
-                        <li><a href="wishlist.html">Wishlist Page</a></li>
-                      </ul>
-                      <!-- Home Version Dropdown End -->
+                    <li><a href='{% url "about:about" %}'>О нас</a></li>                    
+                    <li><a href='{% url "shop" %}'>Магазин</a>
+        
                     </li>                    
-                    <li><a href="blog.html">Статьи<i class="fa fa-angle-down"></i></a>
-                      <!-- Home Version Dropdown Start -->
-                      <ul class="ht-dropdown dropdown-style-two">
-                        <li><a href="blog.html">Blog Page</a></li>
-                        <li><a href="blog-details.html">Blog Details Page</a></li>
-                      </ul>
-                      <!-- Home Version Dropdown End -->
+                    <li><a href="blog.html">Статьи</a>
                     </li>
                     
-                    <li><a href="contact.html">Контакты</a></li>                    
+                    <li><a href='{% url "about:contact" %}'>Контакты</a></li>                    
                   </ul>
                 </nav>
               </div>
@@ -100,12 +71,12 @@
                 <ul>
                   <li><a href="compare.html"><i class="fa fa-cog"></i></a>
                     <ul class="ht-dropdown">
-                      <li><a href="login.html">Login</a></li>
-                      <li><a href="register.html">Register</a></li>
-                      <li><a href="account.html">Account</a></li>                      
+                      <li><a href="login.html">Войти</a></li>
+                      <li><a href="register.html">Регистрация</a></li>
+                      <li><a href="account.html">Профиль</a></li>                      
                     </ul>
                   </li>                  
-                  <li><a href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
+                  
                   <li><a href="{% url 'cart:cart_detail' %}"><i class="fa fa-shopping-basket"></i><span class="cart-counter">{{ cart.get_total_price }} руб.</span></a>
                     <ul class="ht-dropdown main-cart-box">
                       <li>

@@ -4,9 +4,10 @@ from django.db.models import Avg
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
+from django.core.paginator import Paginator
 
 from .mixins import CategoryDetailMixin
-from .models import Category, Gloves, LatestProducts
+from .models import Category, Gloves, LatestProducts, Manufacturer
 
 User = get_user_model()
 
@@ -21,7 +22,9 @@ class BaseView(View):
         cart_product_form = CartAddProductForm()
         return render(
             request, 'base.html', {
-                'categories': categories, 'products': products, 'cart_product_form': cart_product_form})
+                'categories': categories,
+                'products': products,
+                'cart_product_form': cart_product_form})
 
 
 class ShopView(View):
@@ -29,9 +32,17 @@ class ShopView(View):
     def get(self, request, *args, **kwargs):
         categories = Category.objects.filter(published=True).all()
         products = Gloves.objects.filter(published=True).all()
+        manufacturer = Manufacturer.objects.all()
+        cart_product_form = CartAddProductForm()
+        # paginator = Paginator(products_list, 10)
+        # page_number = request.GET.get('products')
+        # products = paginator.get_page(page_number)
         return render(
             request, 'shop.html', {
-                'categories': categories, 'products': products})
+                'categories': categories,
+                'products': products,
+                'manufacturer': manufacturer,
+                'cart_product_form': cart_product_form})
 
 
 class ProductDetailView(CategoryDetailMixin, DetailView):
