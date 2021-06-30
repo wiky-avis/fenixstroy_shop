@@ -31,7 +31,8 @@ class ShopView(View):
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.filter(published=True).all()
-        products = Gloves.objects.filter(published=True).all()
+        sort = request.GET.getlist('sort')
+        products = Gloves.objects.filter(published=True).all().order_by(*sort)
         manufacturer = Manufacturer.objects.all()
         cart_product_form = CartAddProductForm()
         paginator = Paginator(products, 9)
@@ -78,6 +79,7 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
             )
         context['products'] = category.category_products.all()
         context['manufacturer'] = Manufacturer.objects.all()
+        context['cart_product_form'] = CartAddProductForm()
         return context
 
 
@@ -95,4 +97,5 @@ class ManufactureDetailView(CategoryDetailMixin, DetailView):
             )
         context['products'] = manufacture.manufacturer_products.all()
         context['manufacturer'] = Manufacturer.objects.all()
+        context['cart_product_form'] = CartAddProductForm()
         return context

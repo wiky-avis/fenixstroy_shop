@@ -63,13 +63,14 @@
                             <!-- Toolbar Short Area Start -->
                             <div class="main-toolbar-sorter f-right">
                                 <div class="toolbar-sorter">
-                                    <label>sort by</label>
-                                    <select class="sorter" name="sorter">
-                                        <option value="Position" selected="selected">position</option>
-                                        <option value="Product Name">Product Name</option>
-                                        <option value="Price">Price</option>
+                                <form method="get">
+                                    <button type="submit" class="btn btn-light">Сортировать</button>
+                                    <select class="sorter" name="sort">
+                                        <option name="sort" value="name" selected="selected" {{ by_name }}>По названию</option>
+                                        <option name="sort" value="published" {{ by_published }}>По дате</option>
+                                        <option name="sort" value="price" {{ by_price }}>По цене</option>
                                     </select>
-                                    <span><a href="#"><i class="fa fa-arrow-up"></i></a></span>
+                                </form>
                                 </div>
                             </div>
                             <!-- Toolbar Short Area End -->
