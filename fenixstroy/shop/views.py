@@ -34,7 +34,7 @@ class ShopView(View):
         products = Gloves.objects.filter(published=True).all()
         manufacturer = Manufacturer.objects.all()
         cart_product_form = CartAddProductForm()
-        paginator = Paginator(products, 10)
+        paginator = Paginator(products, 9)
         page_number = request.GET.get('page')
         page = paginator.get_page(page_number)
         return render(
