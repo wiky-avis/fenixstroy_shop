@@ -41,7 +41,6 @@ class ShopView(View):
         return render(
             request, 'shop.html', {
                 'categories': categories,
-                'products': products,
                 'manufacturer': manufacturer,
                 'cart_product_form': cart_product_form,
                 'page': page})
@@ -78,10 +77,11 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
             Category, slug=self.kwargs.get('category_slug')
             )
         sort = self.request.GET.getlist('sort')
-        products = category.category_products.filter(published=True).all().order_by(*sort)
+        products = category.category_products.filter(
+            published=True).all().order_by(*sort)
         paginator = Paginator(products, 9)
         page_number = self.request.GET.get('page')
-        context['products'] = paginator.get_page(page_number)
+        context['page'] = paginator.get_page(page_number)
         context['manufacturer'] = Manufacturer.objects.all()
         context['cart_product_form'] = CartAddProductForm()
         return context
@@ -100,10 +100,24 @@ class ManufactureDetailView(CategoryDetailMixin, DetailView):
             Manufacturer, slug=self.kwargs.get('manufacture_slug')
             )
         sort = self.request.GET.getlist('sort')
-        products = manufacture.manufacturer_products.filter(published=True).all().order_by(*sort)
+        products = manufacture.manufacturer_products.filter(
+            published=True).all().order_by(*sort)
         paginator = Paginator(products, 9)
         page_number = self.request.GET.get('page')
-        context['products'] = paginator.get_page(page_number)
+        context['page'] = paginator.get_page(page_number)
         context['manufacturer'] = Manufacturer.objects.all()
         context['cart_product_form'] = CartAddProductForm()
         return context
+
+
+def page_not_found(request, exception):
+    return render(
+        request,
+        'misc/404.html',
+        {'path': request.path},
+        status=404
+    )
+
+
+def server_error(request):
+    return render(request, 'misc/500.html', status=500)

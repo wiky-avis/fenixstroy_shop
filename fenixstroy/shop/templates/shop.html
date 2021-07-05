@@ -4,12 +4,12 @@
 {% block content %}
 {% load thumbnail %}
 <!-- Breadcrumb Start -->
-    <div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="breadcrumb-area ptb-20 ptb-sm-30">
       <div class="container">
         <div class="breadcrumb">
           <ul>
             <li><a href='{% url "base" %}'>Главная</a></li>
-            <li class="active"><a href='{% url "shop" %}'>Магазин</a></li>
+            <li class="active"><a href='#'>Магазин</a></li>
           </ul>
         </div>
       </div>
@@ -56,7 +56,6 @@
                                 <ul class="list-inline nav">
                                     <li><a data-toggle="tab" href="#grid-view"><i class="fa fa-th"></i></a></li>
                                     <li><a  class="active" data-toggle="tab" href="#list-view"><i class="fa fa-list-ul"></i></a></li>
-                                    <li><span class="grid-item-list"> Items 1-12 of 13</span></li>
                                 </ul>
                             </div>
                             <!-- Toolbar Short Area Start -->
@@ -169,20 +168,13 @@
                             <!-- Grid & List Main Area End -->
                         </div>
                         <!--Breadcrumb and Page Show Start -->
+                        {% if page.has_other_pages %}
                         <div class="pagination-box fix">
-                            {% if page.has_other_pages %}
+                            
                               {% include 'includes/paginator.html' %}
-                            {% endif %}
-                            <div class="toolbar-sorter-footer">
-                                <label>show</label>
-                                <select class="sorter" name="sorter">
-                                    <option value="Position" selected="selected">12</option>
-                                    <option value="Product Name">15</option>
-                                    <option value="Price">30</option>
-                                </select>
-                                <span>per page</span>
-                            </div>
+                            
                         </div>
+                        {% endif %}
                         <!--Breadcrumb and Page Show End -->
                     </div>
                     <!-- product Categorie List End -->

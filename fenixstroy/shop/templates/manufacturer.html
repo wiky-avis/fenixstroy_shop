@@ -4,13 +4,13 @@
 {% block content %}
 {% load thumbnail %}
 <!-- Breadcrumb Start -->
-    <div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="breadcrumb-area ptb-20 ptb-sm-30">
       <div class="container">
         <div class="breadcrumb">
           <ul>
             <li><a href='{% url "base" %}'>Главная</a></li>
             <li><a href='{% url "shop" %}'>Магазин</a></li>
-            <li class="active"><a href='{{ manufacture.get_url_absolute }}'>{{ manufacture.name }}</a></li>
+            <li class="active"><a href='#'>{{ manufacture.name }}</a></li>
           </ul>
         </div>
       </div>
@@ -57,7 +57,6 @@
                                 <ul class="list-inline nav">
                                     <li><a data-toggle="tab" href="#grid-view"><i class="fa fa-th"></i></a></li>
                                     <li><a  class="active" data-toggle="tab" href="#list-view"><i class="fa fa-list-ul"></i></a></li>
-                                    <li><span class="grid-item-list"> Items 1-12 of 13</span></li>
                                 </ul>
                             </div>
                             <!-- Toolbar Short Area Start -->
@@ -81,7 +80,7 @@
                             <div class="tab-content fix">
                                 <div id="grid-view" class="tab-pane ">
                                     <div class="row">
-                                    {% for product in products %}
+                                    {% for product in page %}
 
                                         <!-- Single Product Start -->                    
                                         <div class="col-lg-4 col-sm-6">
@@ -126,7 +125,7 @@
                                 </div>
                                 <!-- #grid view End -->
                                 <div id="list-view" class="tab-pane active">
-                                {% for product in products %}
+                                {% for product in page %}
                                     <!-- Single Product Start -->
                                   <div class="single-product">
                                     <!-- Product Image Start -->
@@ -170,20 +169,13 @@
                             <!-- Grid & List Main Area End -->
                         </div>
                         <!--Breadcrumb and Page Show Start -->
+                        {% if page.has_other_pages %}
                         <div class="pagination-box fix">
-                            {% if page.has_other_pages %}
+                            
                               {% include 'includes/paginator.html' %}
-                            {% endif %}
-                            <div class="toolbar-sorter-footer">
-                                <label>show</label>
-                                <select class="sorter" name="sorter">
-                                    <option value="Position" selected="selected">12</option>
-                                    <option value="Product Name">15</option>
-                                    <option value="Price">30</option>
-                                </select>
-                                <span>per page</span>
-                            </div>
+                            
                         </div>
+                        {% endif %}
                         <!--Breadcrumb and Page Show End -->
                     </div>
                     <!-- product Categorie List End -->

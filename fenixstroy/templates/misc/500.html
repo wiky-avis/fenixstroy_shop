@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Ошибка 500 :: Фениксстрой{% endblock title %}
+{% block content %}
+{% load thumbnail %}
+<!-- Error 500 Area Start -->
+        <div class="error404-area pb-60 pt-20">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="error-wrapper text-center">
+                            <div class="error-text">
+                                <h1>500</h1>
+                                <h2>Ошибка на сервере, попробуйте обновить страницу или обратиться позже</h2>
+                            </div>
+                            <div class="error-button">
+                                <a href='{% url  "base" %}'>Вернуться на главную</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Error 500 Area End -->
+{% endblock content %}

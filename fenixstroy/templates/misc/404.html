@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Ошибка 404 :: Фениксстрой{% endblock title %}
+{% block content %}
+<!-- Error 404 Area Start -->
+        <div class="error404-area pb-60 pt-20">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="error-wrapper text-center">
+                            <div class="error-text">
+                                <h1>404</h1>
+                                <h2>Страница <code>{{ path }}</code> не найдена.</h2>
+                            </div>
+                            <div class="error-button">
+                                <a href='{% url  "base" %}'>Вернуться на главную</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Error 404 Area End -->
+{% endblock content %}
