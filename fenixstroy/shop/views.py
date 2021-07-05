@@ -1,10 +1,10 @@
 from cart.forms import CartAddProductForm
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
-from django.core.paginator import Paginator
 
 from .mixins import CategoryDetailMixin
 from .models import Category, Gloves, LatestProducts, Manufacturer
@@ -77,7 +77,11 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
         category = get_object_or_404(
             Category, slug=self.kwargs.get('category_slug')
             )
-        context['products'] = category.category_products.all()
+        sort = self.request.GET.getlist('sort')
+        products = category.category_products.filter(published=True).all().order_by(*sort)
+        paginator = Paginator(products, 9)
+        page_number = self.request.GET.get('page')
+        context['products'] = paginator.get_page(page_number)
         context['manufacturer'] = Manufacturer.objects.all()
         context['cart_product_form'] = CartAddProductForm()
         return context
@@ -95,7 +99,11 @@ class ManufactureDetailView(CategoryDetailMixin, DetailView):
         manufacture = get_object_or_404(
             Manufacturer, slug=self.kwargs.get('manufacture_slug')
             )
-        context['products'] = manufacture.manufacturer_products.all()
+        sort = self.request.GET.getlist('sort')
+        products = manufacture.manufacturer_products.filter(published=True).all().order_by(*sort)
+        paginator = Paginator(products, 9)
+        page_number = self.request.GET.get('page')
+        context['products'] = paginator.get_page(page_number)
         context['manufacturer'] = Manufacturer.objects.all()
         context['cart_product_form'] = CartAddProductForm()
         return context
