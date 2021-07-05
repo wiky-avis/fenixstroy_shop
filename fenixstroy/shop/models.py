@@ -1,5 +1,4 @@
 import sys
-from decimal import Decimal
 from io import BytesIO
 
 from django.contrib.auth.models import AbstractUser
@@ -9,6 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
 from PIL import Image
+from decimal import Decimal
 
 
 def get_product_url(obj, viewname):
