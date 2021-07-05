@@ -1,11 +1,10 @@
+from cart.forms import CartAddProductForm
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
-
-from cart.forms import CartAddProductForm
 
 from .mixins import CategoryDetailMixin
 from .models import Category, Gloves, LatestProducts, Manufacturer

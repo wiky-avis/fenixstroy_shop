@@ -1,8 +1,7 @@
+from cart.cart import Cart
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
-
-from cart.cart import Cart
 
 from .forms import OrderCreateForm
 from .models import Order, OrderItem
