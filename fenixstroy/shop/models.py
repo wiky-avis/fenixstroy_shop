@@ -1,4 +1,5 @@
 import sys
+from decimal import Decimal
 from io import BytesIO
 
 from django.contrib.auth.models import AbstractUser
@@ -70,7 +71,8 @@ class Category(models.Model):
         verbose_name='Изображение товара',
         upload_to='categories/',
         null=True,
-        blank=True)
+        blank=True,
+        default='default/def.jpg')
 
     class Meta:
         verbose_name_plural = 'Категории'
@@ -127,12 +129,13 @@ class Product(models.Model):
         decimal_places=2,
         verbose_name='Цена товара, руб.',
         null=True,
-        blank=True)
+        blank=True,
+        default=Decimal('0.00'))
     image = models.ImageField(
         verbose_name='Изображение товара',
         upload_to='products/',
         null=True,
-        blank=True)
+        blank=True, default='default/def.jpg',)
     rating = models.IntegerField(
         'Рейтинг', null=True, blank=True, default=0)
     published = models.BooleanField(verbose_name='Опубликовано')
@@ -209,7 +212,7 @@ class Gloves(Product):
 class Gallery(models.Model):
     image = models.ImageField(
         verbose_name='Изображение товара',
-        upload_to='gallery/',
+        upload_to='products/gallery/',
         null=True,
         blank=True)
     gloves = models.ForeignKey(
