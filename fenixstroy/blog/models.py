@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -9,6 +10,9 @@ class Category(models.Model):
         ordering = ('-name',)
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Article(models.Model):
@@ -22,11 +26,24 @@ class Article(models.Model):
         on_delete=models.SET_NULL,
         verbose_name='Категория',
         null=True)
+    published = models.BooleanField(verbose_name='Опубликовано')
+    image = models.ImageField(
+        verbose_name='Изображение',
+        upload_to='articles/',
+        null=True,
+        blank=True, default='default/def.jpg',)
 
     class Meta:
         ordering = ('-pub_date',)
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
+
+    def __str__(self) -> str:
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse(
+            'blog_detail', kwargs={'slug': self.slug})
 
 
 class ArticleComment(models.Model):
@@ -37,11 +54,6 @@ class ArticleComment(models.Model):
     text = models.TextField(
         verbose_name='Комментарий',
         help_text='Введите пожалуйста текст вашего комментария')
-    image = models.ImageField(
-        verbose_name='Изображение',
-        upload_to='articles/',
-        null=True,
-        blank=True, default='default/def.jpg',)
     created = models.DateTimeField(
         verbose_name='Дата публикации', auto_now_add=True)
 
@@ -49,3 +61,6 @@ class ArticleComment(models.Model):
         ordering = ('-created',)
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+    def __str__(self) -> str:
+        return f'Комментарий к статье {self.article.id}'

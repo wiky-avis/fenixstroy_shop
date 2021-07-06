@@ -1,10 +1,12 @@
-from cart.forms import CartAddProductForm
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
+
+from blog.models import Article
+from cart.forms import CartAddProductForm
 
 from .mixins import CategoryDetailMixin
 from .models import Category, Gloves, LatestProducts, Manufacturer
@@ -19,12 +21,14 @@ class BaseView(View):
         products = LatestProducts.objects.get_products_for_main_page(
             'gloves',
             whith_respect_to='gloves')
+        articles = Article.objects.all()
         cart_product_form = CartAddProductForm()
         return render(
             request, 'base.html', {
                 'categories': categories,
                 'products': products,
-                'cart_product_form': cart_product_form})
+                'cart_product_form': cart_product_form,
+                'articles': articles})
 
 
 class ShopView(View):

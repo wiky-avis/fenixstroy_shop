@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Category, Article, ArticleComment
+
+from .models import Article, ArticleComment, Category
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -11,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'slug', 'pub_date', 'category', 'image')
+    list_display = ('pk', 'title', 'slug', 'pub_date', 'category', 'published')
     list_display_links = ('title',)
     search_fields = ('title',)
     prepopulated_fields = {'slug': ('title',)}
