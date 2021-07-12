@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ category.name }} :: Фениксстрой{% endblock title %}
+{% block title %}Статьи :: Фениксстрой{% endblock title %}
 {% block content %}
     <!-- Breadcrumb Start -->
     <div class="breadcrumb-area ptb-20 ptb-sm-30">
@@ -35,7 +35,7 @@
                   </ul>
                 </div>
                 <div class="readmore">
-                  <a href="{{ article.get_absolute_url }}">Подробнее.....</a>
+                  <a href="{{ article.get_absolute_url }}">Подробнее...</a>
                 </div>
               </div>
             </div>
