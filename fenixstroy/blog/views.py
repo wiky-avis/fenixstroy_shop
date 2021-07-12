@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
+from django.views.generic.edit import CreateView
 
 from .models import Article, ArticleComment, Category
 
@@ -26,3 +27,9 @@ class ArticleDetailView(DetailView):
         artticle = get_object_or_404(Article, slug=self.kwargs.get('slug'))
         context['comments'] = artticle.article_comments.all()
         return context
+
+
+class ArticleCommentCreateView(CreateView):
+    model = ArticleComment
+    template_name = 'comment_new.html'
+    fields = ['author', 'text']

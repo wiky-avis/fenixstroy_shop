@@ -20,8 +20,8 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 class ArticleCommentAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'article', 'text', 'created')
-    list_display_links = ('text',)
+    list_display = ('pk', 'author', 'article', 'text', 'created')
+    list_display_links = ('author',)
     search_fields = ('article',)
     empty_value_display = '-пусто-'
 

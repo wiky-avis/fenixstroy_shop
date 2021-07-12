@@ -1,0 +1,23 @@
+<form id="contact-form" class="contact-form" action="{% url 'blog:new_comment' %}" method="post">
+    {% csrf_token %}
+  <div class="address-wrapper">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="address-fname">
+      <input type="text" name="{{ form.name }}" placeholder="Имя">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="address-textarea">
+      <textarea name="{{ form.text }}" placeholder="Напишите свой комментарий"></textarea>
+      </div>
+    </div>
+    </div>
+  </div>
+  <p class="form-message ml-15"></p>
+  <div class="col-xs-12 footer-content mail-content">
+    <div class="send-email pull-right">
+    <input type="submit" value="Отправить" class="submit">
+    </div>
+  </div>
+</form>

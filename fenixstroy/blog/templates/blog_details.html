@@ -77,63 +77,27 @@
 
             <!-- Comment Area Start -->
             <div class="comment-area recent-post">
-              <h3 class="sidebar-title">1 COMMENTS</h3>
+              <h3 class="sidebar-title">Коммнетарии: {{ comments.count }}</h3>
               <!-- Single Comment Start -->
+              {% for comment in comments %}
               <div class="single-comment">
-                <div class="comment-img f-left pr-30">
-                  <img src="{% static 'img/blog/user.jpg' %}" alt="blog-comment">
-                </div>
+                
                 <div class="comment-details fix">
-                  <h4><a href="#">RICE JOHNNY</a></h4>
-                  <span>August 10, 2018 at 11:08 am</span>
-                  <p>But I must explain to you how all this mistaken idea of denouncing pleas praising pain born and I will give you a complete account of the system</p>
+                  <h4><a href="#">{{ comment.author }}</a></h4>
+                  <span>{{ comment.created }}</span>
+                  <p>{{ comment.text }}</p>
                 </div>
-                <a class="reply" href="#">reply</a>
+                <a class="reply" href="#">ответить</a>
               </div>
+              {% endfor %}
               <!-- Single Comment End -->
             </div>
             <!-- Comment Area End -->
             <!-- Contact Email Area Start -->
             <div class="blog-detail-contact">
-              <h3>Leave A Comment</h3>
-              <p class="text-capitalize mb-40">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-              <form id="contact-form" class="contact-form" action="mail.php" method="post">
-                <div class="address-wrapper">
-                <div class="row">
-                    <div class="col-md-12">
-                      <div class="address-fname">
-                        <input type="text" name="name" placeholder="Name">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="address-email">
-                        <input type="email" name="email" placeholder="Email">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="address-web">
-                        <input type="text" name="website" placeholder="Website">
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="address-subject">
-                        <input type="text" name="subject" placeholder="Subject">
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="address-textarea">
-                        <textarea name="message" placeholder="Type your Comments"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <p class="form-message ml-15"></p>
-                <div class="col-xs-12 footer-content mail-content">
-                  <div class="send-email pull-right">
-                    <input type="submit" value="Send" class="submit">
-                  </div>
-                </div>
-              </form>
+              <h3>Оставьте Комментарий</h3>
+              <br/>
+              {% include 'comment_new.html' %}
             </div>
             <!-- Contact Email Area End -->
           </div>

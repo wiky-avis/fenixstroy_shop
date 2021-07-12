@@ -11,4 +11,5 @@ urlpatterns = [
         views.ArticleDetailView.as_view(),
         name='blog_detail'
         ),
+    path('new_comment/', views.ArticleCommentCreateView.as_view(), name='new_comment'),
 ]

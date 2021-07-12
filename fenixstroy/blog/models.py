@@ -50,6 +50,7 @@ class ArticleComment(models.Model):
         Article,
         on_delete=models.CASCADE,
         related_name='article_comments', verbose_name='Статья')
+    author = models.CharField(max_length=150)
     text = models.TextField(
         verbose_name='Комментарий',
         help_text='Введите пожалуйста текст вашего комментария')
