@@ -1,0 +1,12 @@
+<form id="contact-form" class="contact-form" action="{% url 'new_comment_product' product.pk product.slug %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label class="req" for="sure-name">{{form.name}}</label>
+      <input type="text" class="form-control" id="sure-name" required="required">
+    </div>
+    <div class="form-group">
+      <label class="req" for="comments">{{form.text}}</label>
+      <textarea class="form-control" rows="5" id="comments" required="required"></textarea>
+    </div>
+    <button type="submit" class="btn-submit">Сохранить комментарий</button>
+</form>

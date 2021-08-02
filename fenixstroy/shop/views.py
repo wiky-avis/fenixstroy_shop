@@ -4,12 +4,13 @@ from django.db.models import Avg
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
+from django.views.generic.edit import CreateView
 
 from blog.models import Article
 from cart.forms import CartAddProductForm
 
 from .mixins import CategoryDetailMixin
-from .models import Category, Gloves, LatestProducts, Manufacturer
+from .models import Category, Gloves, LatestProducts, Manufacturer, Comment
 
 User = get_user_model()
 
@@ -65,7 +66,14 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
         int_rating = gloves.comments.all().aggregate(Avg('score'))
         context['int_rating'] = int_rating['score__avg']
         context['cart_product_form'] = CartAddProductForm()
+        context['comments'] = gloves.comments.all()
         return context
+
+
+class ProductCommentCreateView(CreateView):
+    model = Comment
+    template_name = 'includes/product_comment_new.html'
+    fields = ['author', 'text']
 
 
 class CategoryDetailView(CategoryDetailMixin, DetailView):

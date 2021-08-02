@@ -166,6 +166,17 @@
                     <!-- Single Review List End -->
                   </ul>
                 </div>
+                <h4 class="review-mini-title">{{ comment.author }}</h4>
+                {% for comment in comments %}
+                  <div class="single-comment">
+                    <div class="comment-details fix">
+                      <span>{{ comment.created }}</span>
+                      <p>{{ comment.text }}</p>
+                    </div>
+                    <a class="reply" href="#">ответить</a>
+                  </div>
+                {% endfor %}
+                </div>
                 <!-- Reviews End -->
                 <!-- Reviews Start -->
                 <div class="review border-default universal-padding mt-30">
@@ -205,21 +216,7 @@
                   </ul>
                   <!-- Reviews Field Start -->
                   <div class="riview-field mt-40">
-                    <form autocomplete="off" action="#">
-                      <div class="form-group">
-                        <label class="req" for="sure-name">Nickname</label>
-                        <input type="text" class="form-control" id="sure-name" required="required">
-                      </div>
-                      <div class="form-group">
-                        <label class="req" for="subject">Summary</label>
-                        <input type="text" class="form-control" id="subject" required="required">
-                      </div>
-                      <div class="form-group">
-                        <label class="req" for="comments">Review</label>
-                        <textarea class="form-control" rows="5" id="comments" required="required"></textarea>
-                      </div>
-                      <button type="submit" class="btn-submit">Submit Review</button>
-                    </form>
+                      {% include 'includes/product_comment_new.html' %}
                   </div>
                   <!-- Reviews Field Start -->
                 </div>
