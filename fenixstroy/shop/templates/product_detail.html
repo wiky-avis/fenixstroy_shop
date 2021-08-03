@@ -167,60 +167,19 @@
                   </ul>
                 </div>
                 {% for comment in comments %}
-                <h4 class="review-mini-title">{{ comment.author }}</h4>
+                <h4 class="review-mini-title">{{ comment.author.username }}</h4>
                   <div class="single-comment">
                     <div class="comment-details fix">
                       <span>{{ comment.created }}</span>
-                      <p>{{ comment.text }}</p>
+                      <p>{{ comment.text | linebreaksbr }}</p>
                     </div>
                     <a class="reply" href="#">ответить</a>
                   </div>
                 {% endfor %}
+
+                {% include 'includes/product_comment_new.html' with product=product %}
                 </div>
-                <!-- Reviews End -->
-                <!-- Reviews Start -->
-                <div class="review border-default universal-padding mt-30">
-                  <h2 class="review-title mb-30">You're reviewing: <br><span>Go-Get'r Pushup Grips</span></h2>
-                  <p class="review-mini-title">your rating</p>
-                  <ul class="review-list">
-                    <!-- Single Review List Start -->
-                    <li>
-                      <span>Quality</span>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-o"></i>
-                      <i class="fa fa-star-o"></i>
-                    </li>
-                    <!-- Single Review List End -->
-                    <!-- Single Review List Start -->
-                    <li>
-                      <span>price</span>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-o"></i>
-                      <i class="fa fa-star-o"></i>
-                      <i class="fa fa-star-o"></i>
-                    </li>
-                    <!-- Single Review List End -->
-                    <!-- Single Review List Start -->
-                    <li>
-                      <span>value</span>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-o"></i>
-                    </li>
-                    <!-- Single Review List End -->
-                  </ul>
-                  <!-- Reviews Field Start -->
-                  <div class="riview-field mt-40">
-                    {% include 'includes/product_comment_new.html' %}
-                  </div>
-                  <!-- Reviews Field Start -->
-                </div>
-                <!-- Reviews End -->
+                <div>
               </div>
             </div>
             <!-- Product Thumbnail Tab Content End -->

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Avg
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
@@ -11,6 +11,7 @@ from cart.forms import CartAddProductForm
 
 from .mixins import CategoryDetailMixin
 from .models import Category, Gloves, LatestProducts, Manufacturer, Comment
+from .forms import CommentForm
 
 User = get_user_model()
 
@@ -70,10 +71,19 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
         return context
 
 
-class ProductCommentCreateView(CreateView):
-    model = Comment
-    template_name = 'includes/product_comment_new.html'
-    fields = ['author', 'text']
+def add_comment(request, id, slug):
+    product = get_object_or_404(Gloves, id=id, slug=slug)
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.product = product
+        comment.author = request.user
+        comment.save()
+        return redirect(
+            'product_detail', id=product.id, slug=product.slug)
+    return render(
+        request, 'includes/product_comment_new.html',
+        {'form': form, 'product': product})
 
 
 class CategoryDetailView(CategoryDetailMixin, DetailView):

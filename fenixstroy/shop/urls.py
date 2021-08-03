@@ -11,7 +11,7 @@ urlpatterns = [
         name='product_detail'),
     path(
         'shop/products/<int:id>/<slug:slug>/comment/',
-        views.ProductCommentCreateView.as_view(),
+        views.add_comment,
         name='new_comment_product'),
     path(
         'shop/category/<slug:category_slug>/',
