@@ -72,7 +72,7 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
 
 class ProductCommentCreateView(CreateView):
     model = Comment
-    template_name = 'includes/product_comment_new.html'
+    template_name = 'product_detail.html'
     fields = ['author', 'text']
 
     def form_valid(self, form):

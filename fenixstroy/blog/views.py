@@ -30,7 +30,7 @@ class ArticleDetailView(DetailView):
 
 class ArticleCommentCreateView(CreateView):
     model = ArticleComment
-    template_name = 'comment_new.html'
+    template_name = 'blog_details.html'
     fields = ['author', 'text']
 
     def form_valid(self, form):

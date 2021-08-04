@@ -1,16 +1,24 @@
 
 <form action="{% url 'blog:new_comment' slug=article.slug %}" method="post">
-<div class='card my-4'>
   {% csrf_token %}
-    <h5 class='card-header'>Добавить комментарий:</h5>
-    <div class='card-body'>
-      <div class='form-group'>
-        {{ form.author }}
+  
+    <div class="row">
+      <div class="col-md-12">
+        <div class="address-fname">
+          {{ form.author }}
+        </div>
       </div>
-      <div class='form-group'>
-        {{ form.text }}
+      <div class="col-md-12">
+        <div class="address-textarea">
+          {{ form.text }}
+        </div>
       </div>
-      <button type='submit' class='btn btn-primary'>Отправить</button>
+      </div>
     </div>
-</div>
+    <p class="form-message ml-15"></p>
+    <div class="col-xs-12 footer-content mail-content">
+      <div class="send-email pull-right">
+      <input type="submit" value="Отправить" class="submit">
+      </div>
+    </div>
 </form>
