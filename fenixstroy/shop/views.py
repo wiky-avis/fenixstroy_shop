@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-from django.db.models import Avg, Max, Sum, Min
-from django.shortcuts import get_object_or_404, render, redirect
+from django.db.models import Avg
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
@@ -10,7 +10,7 @@ from blog.models import Article
 from cart.forms import CartAddProductForm
 
 from .mixins import CategoryDetailMixin
-from .models import Category, Gloves, LatestProducts, Manufacturer, Comment
+from .models import Category, Comment, Gloves, LatestProducts, Manufacturer
 
 User = get_user_model()
 
@@ -64,15 +64,14 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
             Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
             )
         context['comments'] = glove.comments.all()
-        context['price_score'] = context['comments'].aggregate(
-            Avg('price_score')
-            )['price_score__avg']
-        context['quality_score'] = context['comments'].aggregate(
-            Avg('quality_score')
-            )['quality_score__avg']
-        context['int_rating'] = (
-            context['price_score'] + context['quality_score']
-            ) / 2
+        if context['comments']:
+            price_score = context['comments'].aggregate(
+                Avg('price_score')
+                )['price_score__avg']
+            quality_score = context['comments'].aggregate(
+                Avg('quality_score')
+                )['quality_score__avg']
+            context['int_rating'] = (price_score + quality_score) / 2
         context['cart_product_form'] = CartAddProductForm()
         return context
 

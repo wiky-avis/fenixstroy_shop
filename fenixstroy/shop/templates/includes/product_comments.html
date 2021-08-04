@@ -22,15 +22,19 @@
         </div>
         <a class="reply" href="#">ответить</a>
       </div>
+    {% empty %}
+      <p>Пока нет отзывов.</p>
     {% endfor %}
 
     <form method="post" action="{% url 'new_comment_product' product.pk product.slug %}">
-      {% csrf_token %}
+      
       <div class="form-group">
           {{ form|crispy }}
+          {% csrf_token %}
       </div>
       <button type="submit" class="btn-submit">Отправить отзыв</button>
     </form>
-  </div>
+
+    </div>
   <div>
 </div>
