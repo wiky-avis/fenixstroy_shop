@@ -11,7 +11,6 @@ from cart.forms import CartAddProductForm
 
 from .mixins import CategoryDetailMixin
 from .models import Category, Gloves, LatestProducts, Manufacturer, Comment
-from .forms import CommentForm
 
 User = get_user_model()
 
@@ -71,19 +70,29 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
         return context
 
 
-def add_comment(request, id, slug):
-    product = get_object_or_404(Gloves, id=id, slug=slug)
-    form = CommentForm(request.POST or None)
-    if form.is_valid():
+class ProductCommentCreateView(CreateView):
+    model = Comment
+    template_name = 'includes/product_comment_new.html'
+    fields = ['author', 'text']
+
+    def form_valid(self, form):
+        product = get_object_or_404(
+            Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
+            )
         comment = form.save(commit=False)
         comment.product = product
-        comment.author = request.user
         comment.save()
         return redirect(
             'product_detail', id=product.id, slug=product.slug)
-    return render(
-        request, 'includes/product_comment_new.html',
-        {'form': form, 'product': product})
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ProductCommentCreateView, self
+            ).get_context_data(**kwargs)
+        context['product'] = get_object_or_404(
+            Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
+            )
+        return context
 
 
 class CategoryDetailView(CategoryDetailMixin, DetailView):

@@ -72,15 +72,14 @@
               <h3 class="sidebar-title">Коммнетарии: {{ comments.count }}</h3>
               <!-- Single Comment Start -->
               {% for comment in comments %}
-              <div class="single-comment">
-                
-                <div class="comment-details fix">
-                  <h4><a href="#">{{ comment.author }}</a></h4>
-                  <span>{{ comment.created }}</span>
-                  <p>{{ comment.text }}</p>
+                <div class="single-comment">
+                  <div class="comment-details fix">
+                    <h4><a href="#">{{ comment.author }}</a></h4>
+                    <span>{{ comment.created }}</span>
+                    <p>{{ comment.text }}</p>
+                  </div>
+                  <a class="reply" href="#">ответить</a>
                 </div>
-                <a class="reply" href="#">ответить</a>
-              </div>
               {% endfor %}
               <!-- Single Comment End -->
             </div>
@@ -89,7 +88,7 @@
             <div class="blog-detail-contact">
               <h3>Оставьте Комментарий</h3>
               <br/>
-              {% include 'comment_new.html' %}
+              {% include 'comment_new.html' with article=article %}
             </div>
             <!-- Contact Email Area End -->
           </div>

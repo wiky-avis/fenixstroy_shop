@@ -231,10 +231,7 @@ class Comment(models.Model):
         Gloves,
         on_delete=models.CASCADE,
         related_name='comments', verbose_name='Товар')
-    author = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        related_name='comments', verbose_name='Автор')
+    author = models.CharField('Автор', max_length=100)
     text = models.TextField(
         verbose_name='Комментарий',
         help_text='Введите пожалуйста текст вашего комментария')
