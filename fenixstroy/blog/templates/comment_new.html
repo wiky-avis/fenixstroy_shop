@@ -1,24 +1,17 @@
-
+{% load crispy_forms_tags %}
 <form action="{% url 'blog:new_comment' slug=article.slug %}" method="post">
   {% csrf_token %}
   
     <div class="row">
       <div class="col-md-12">
         <div class="address-fname">
-          {{ form.author }}
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="address-textarea">
-          {{ form.text }}
+          {{ form|crispy }}
         </div>
       </div>
       </div>
     </div>
     <p class="form-message ml-15"></p>
     <div class="col-xs-12 footer-content mail-content">
-      <div class="send-email pull-right">
-      <input type="submit" value="Отправить" class="submit">
-      </div>
+      <button type="submit" class="btn-submit">Отправить комментарий</button>
     </div>
 </form>

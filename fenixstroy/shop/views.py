@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-from django.db.models import Avg
+from django.db.models import Avg, Max, Sum, Min
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import DetailView
 from django.views.generic.base import View
@@ -60,20 +60,27 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
-        gloves = get_object_or_404(
+        glove = get_object_or_404(
             Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
             )
-        int_rating = gloves.comments.all().aggregate(Avg('score'))
-        context['int_rating'] = int_rating['score__avg']
+        context['comments'] = glove.comments.all()
+        context['price_score'] = context['comments'].aggregate(
+            Avg('price_score')
+            )['price_score__avg']
+        context['quality_score'] = context['comments'].aggregate(
+            Avg('quality_score')
+            )['quality_score__avg']
+        context['int_rating'] = (
+            context['price_score'] + context['quality_score']
+            ) / 2
         context['cart_product_form'] = CartAddProductForm()
-        context['comments'] = gloves.comments.all()
         return context
 
 
 class ProductCommentCreateView(CreateView):
     model = Comment
     template_name = 'product_detail.html'
-    fields = ['author', 'text']
+    fields = ['quality_score', 'price_score', 'author', 'text']
 
     def form_valid(self, form):
         product = get_object_or_404(

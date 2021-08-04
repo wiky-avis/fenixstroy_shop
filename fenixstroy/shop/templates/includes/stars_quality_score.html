@@ -1,0 +1,37 @@
+{% if quality_score >= 1 and quality_score < 2 %}
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+{% elif quality_score >= 2 and quality_score < 3 %}
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+{% elif quality_score >= 3 and quality_score < 4 %}
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+{% elif quality_score >= 4 and quality_score < 5 %}
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-secondary"></i>
+{% elif quality_score == 5 %}
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+    <i class="fa fa-star text-warning"></i>
+{% else %}
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+    <i class="fa fa-star text-secondary"></i>
+{% endif %}

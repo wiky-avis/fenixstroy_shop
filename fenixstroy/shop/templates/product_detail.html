@@ -69,17 +69,16 @@
                 </div>
               </div>
               <ul class="list-inline">
-        <li class="list-inline-item">
-          <h6>Производитель: </h6>
-        </li>
-        <li class="list-inline-item">
-          <p class="text-muted"><strong>{{ product.manufacturer }}</strong></p>
-        </li>
-        </ul>
+                <li class="list-inline-item">
+                  <h6>Производитель: </h6>
+                </li>
+                <li class="list-inline-item">
+                  <p class="text-muted"><strong>{{ product.manufacturer }}</strong></p>
+                </li>
+              </ul>
               <div class="pro-price mb-10">
                 <p><span class="price">Цена: {{ product.price }} руб.</p>
               </div>
-              
               <div class="box-quantity">
                 <form action='{% url "cart:cart_add" product.id %}' method='post'>
                 <input type="hidden" name="product-title" value="Activewear">
@@ -88,7 +87,7 @@
                   <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Заказать</button>
                 </form>
               </div>
-              
+
               <p class="ptb-20">{{ product.desctriptions|linebreaksbr|truncatechars:200 }}</p>
             </div>
           </div>
@@ -125,62 +124,8 @@
                   <li>Цвета: {{ product.color }}</li>
                 </ul>
               </div>
-              <div id="review" class="tab-pane">
-                <!-- Reviews Start -->
-                <div class="review">
-                  
-                  <h4 class="review-mini-title">Jantrik</h4>
-                  <ul class="review-list">
-                    <!-- Single Review List Start -->
-                    <li>
-                      <span>Quality</span>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-o"></i>
-                      <i class="fa fa-star-o"></i>
-                      <label>Jantrik</label>
-                    </li>
-                    <!-- Single Review List End -->
-                    <!-- Single Review List Start -->
-                    <li>
-                      <span>price</span>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-o"></i>
-                      <i class="fa fa-star-o"></i>
-                      <i class="fa fa-star-o"></i>
-                      <label>Review by <a href="https://themeforest.net/user/Jantrik">Jantrik</a></label>
-                    </li>
-                    <!-- Single Review List End -->
-                    <!-- Single Review List Start -->
-                    <li>
-                      <span>value</span>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-o"></i>
-                      <label>Posted on 7/20/18</label>
-                    </li>
-                    <!-- Single Review List End -->
-                  </ul>
-                </div>
-                {% for comment in comments %}
-                <h4 class="review-mini-title">{{ comment.author }}</h4>
-                  <div class="single-comment">
-                    <div class="comment-details fix">
-                      <span>{{ comment.created }}</span>
-                      <p>{{ comment.text | linebreaksbr }}</p>
-                    </div>
-                    <a class="reply" href="#">ответить</a>
-                  </div>
-                {% endfor %}
-
-                {% include 'includes/product_comment_new.html' with product=product %}
-                </div>
-                <div>
-              </div>
+              <!-- Review List -->
+              {% include 'includes/product_comments.html' with product=product %}
             </div>
             <!-- Product Thumbnail Tab Content End -->
           </div>

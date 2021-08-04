@@ -33,18 +33,16 @@
                         <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
                         <p><span class="price">{{ product.price }} руб.</p>
 
-                        <form action='{% url "cart:cart_add" product.id %}' method='post'>
-
-                          <div class="pro-actions">
-                            <div class="actions-secondary">
-                            <input type="hidden" name="product-title" value="Activewear">
-                              {{ cart_product_form.quantity }}
-                              {% csrf_token %}
-                            <button type="submit" class="btn btn-light" name="submit" value="addtocard">Add To Cart</button>
-                              
+                        <div class="pro-actions">
+                            <div class="box-quantity">
+                                <form action='{% url "cart:cart_add" product.id %}' method='post'>
+                                <input type="hidden" name="product-title" value="Activewear">
+                                  {{ cart_product_form.quantity }}
+                                  {% csrf_token %}
+                              <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Заказать</button>
+                              </form>
                             </div>
-                          </div>
-                        </form>
+                        </div>
                       </div>
                       <!-- Product Content End -->
                     </div>

@@ -137,8 +137,6 @@ class Product(models.Model):
         upload_to='products/',
         null=True,
         blank=True, default='default/def.jpg',)
-    rating = models.IntegerField(
-        'Рейтинг', null=True, blank=True, default=0)
     published = models.BooleanField(verbose_name='Опубликовано')
 
     class Meta:
@@ -235,8 +233,12 @@ class Comment(models.Model):
     text = models.TextField(
         verbose_name='Комментарий',
         help_text='Введите пожалуйста текст вашего комментария')
-    score = models.IntegerField(
-        'Оценка',
+    quality_score = models.IntegerField(
+        'Качество',
+        default=1,
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    price_score = models.IntegerField(
+        'Цена',
         default=1,
         validators=[MinValueValidator(1), MaxValueValidator(5)])
     created = models.DateTimeField(

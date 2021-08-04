@@ -104,7 +104,7 @@
                                                     <h4><a href="product.html">{{ product.name }}</a></h4>
                                                     <p><span class="price">{{ product.price }} руб.</span></p>
                                                     <div class="pro-actions">
-                                                        <div class="actions-secondary">
+                                                        <div class="box-quantity">
                                                             <form action='{% url "cart:cart_add" product.id %}' method='post'>
                                                             <input type="hidden" name="product-title" value="Activewear">
                                                               {{ cart_product_form.quantity }}
@@ -148,14 +148,14 @@
                                       <p><span class="price">{{ product.price }} руб.</del></p>
                                       <p>{{ product.desctriptions|linebreaksbr|truncatechars:200 }}</p>
                                       <div class="pro-actions">
-                                        <div class="actions-secondary">
-                                          <form action='{% url "cart:cart_add" product.id %}' method='post'>
-                                            <input type="hidden" name="product-title" value="Activewear">
-                                              {{ cart_product_form.quantity }}
-                                              {% csrf_token %}
-                                          <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Заказать</button>
-                                          </form>
-                                        </div>
+                                          <div class="box-quantity">
+                                              <form action='{% url "cart:cart_add" product.id %}' method='post'>
+                                              <input type="hidden" name="product-title" value="Activewear">
+                                                {{ cart_product_form.quantity }}
+                                                {% csrf_token %}
+                                            <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Заказать</button>
+                                            </form>
+                                          </div>
                                       </div>
                                     </div>
                                     <!-- Product Content End -->

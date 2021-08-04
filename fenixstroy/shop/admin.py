@@ -70,7 +70,7 @@ class GlovesAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'product', 'author', 'text', 'score', 'created')
+    list_display = ('pk', 'product', 'author', 'text', 'created')
     list_display_links = ('product',)
     search_fields = ('product', 'author')
     empty_value_display = '-пусто-'

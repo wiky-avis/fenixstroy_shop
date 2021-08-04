@@ -1,0 +1,36 @@
+{% load crispy_forms_tags %}
+<div id="review" class="tab-pane">
+  <!-- Reviews Start -->
+    {% for comment in comments %}
+    <h4 class="review-mini-title">{{ comment.author }}</h4>
+      <div class="review">
+        <table cellpadding='5'>
+          <tr>
+            <td><span>Качество</span></td>
+            <td>{% include 'includes/stars_quality_score.html' %}</td>
+          </tr>
+          <tr>
+            <td><span>Цена</span></td>
+            <td>{% include 'includes/stars_price_score.html' %}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="single-comment">
+        <div class="comment-details fix">
+          <span>{{ comment.created }}</span>
+          <p>{{ comment.text | linebreaksbr }}</p>
+        </div>
+        <a class="reply" href="#">ответить</a>
+      </div>
+    {% endfor %}
+
+    <form method="post" action="{% url 'new_comment_product' product.pk product.slug %}">
+      {% csrf_token %}
+      <div class="form-group">
+          {{ form|crispy }}
+      </div>
+      <button type="submit" class="btn-submit">Отправить отзыв</button>
+    </form>
+  </div>
+  <div>
+</div>
