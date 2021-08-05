@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 
 from .models import Article, ArticleComment, Category
+from .forms import ArticleCommentForm
 
 
 class ArticleView(View):
@@ -25,6 +26,7 @@ class ArticleDetailView(DetailView):
         context['articles'] = Article.objects.all()
         article = get_object_or_404(Article, slug=self.kwargs.get('slug'))
         context['comments'] = article.article_comments.all()
+        context['form'] = ArticleCommentForm()
         return context
 
 

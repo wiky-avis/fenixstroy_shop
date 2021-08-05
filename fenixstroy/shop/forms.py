@@ -4,8 +4,7 @@ from .models import Comment
 
 
 class CommentForm(forms.ModelForm):
-    text = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Comment
-        fields = ['author','text']
+        fields = ['quality_score', 'price_score', 'author', 'text']

@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView
 
 from blog.models import Article
 from cart.forms import CartAddProductForm
+from .forms import CommentForm
 
 from .mixins import CategoryDetailMixin
 from .models import Category, Comment, Gloves, LatestProducts, Manufacturer
@@ -73,6 +74,7 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
                 )['quality_score__avg']
             context['int_rating'] = (price_score + quality_score) / 2
         context['cart_product_form'] = CartAddProductForm()
+        context['form'] = CommentForm()
         return context
 
 
