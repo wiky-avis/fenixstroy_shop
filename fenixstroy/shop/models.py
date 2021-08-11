@@ -235,11 +235,11 @@ class Comment(models.Model):
         help_text='Введите пожалуйста текст вашего комментария')
     quality_score = models.IntegerField(
         'Качество',
-        default=1,
+        default=0,
         validators=[MinValueValidator(1), MaxValueValidator(5)])
     price_score = models.IntegerField(
         'Цена',
-        default=1,
+        default=0,
         validators=[MinValueValidator(1), MaxValueValidator(5)])
     created = models.DateTimeField(
         verbose_name='Дата публикации', auto_now_add=True)

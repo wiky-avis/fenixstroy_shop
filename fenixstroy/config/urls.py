@@ -14,6 +14,10 @@ urlpatterns = [
     path('about/', include('about.urls', namespace='about')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('blog/', include('blog.urls', namespace='blog')),
+    # path(
+    #     'ratings/',
+    #     include('star_ratings.urls', namespace='ratings')
+    #     ),
 ]
 
 if settings.DEBUG:

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     'sorl.thumbnail',
     'crispy_forms',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
