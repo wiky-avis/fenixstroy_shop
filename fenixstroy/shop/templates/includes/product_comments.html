@@ -3,18 +3,6 @@
   <!-- Reviews Start -->
     {% for comment in comments %}
     <h4 class="review-mini-title">{{ comment.author }}</h4>
-      <div class="review">
-        <table cellpadding='5'>
-          <tr>
-            <td><span>Качество</span></td>
-            <td>{% include 'includes/stars_quality_score.html' %}</td>
-          </tr>
-          <tr>
-            <td><span>Цена</span></td>
-            <td>{% include 'includes/stars_price_score.html' %}</td>
-          </tr>
-        </table>
-      </div>
       <div class="single-comment">
         <div class="comment-details fix">
           <span>{{ comment.created }}</span>
@@ -29,9 +17,9 @@
     <form method="post" action="{% url 'new_comment_product' product.pk product.slug %}">
       
       <div class="form-group">
-          <input type="hidden" value="{{ movie.id }}" name="movie">
+          <input type="hidden" value="{{ product.id }}" name="product">
           <span class="rating">
-              {% for k, v in form.fields.star.choices %}
+              {% for k, v in star_form.fields.star.choices %}
                   <input id="rating{{ v }}" type="radio" name="star"
                          value="{{ k }}">
                   <label for="rating{{ v }}">{{ k }}</label>
@@ -42,7 +30,6 @@
       </div>
       <button type="submit" class="btn-submit">Отправить отзыв</button>
     </form>
-
 
     </div>
   <div>

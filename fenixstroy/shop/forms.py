@@ -1,13 +1,21 @@
 from django import forms
 
-from .models import Comment, RatingStar
+from .models import Comment, Rating, RatingStar
 
 
-class CommentForm(forms.ModelForm):
+class RatingForm(forms.ModelForm):
     star = forms.ModelChoiceField(
-        queryset=RatingStar.objects.all(), widget=forms.RadioSelect(), empty_label=None
+        queryset=RatingStar.objects.all(),
+        widget=forms.RadioSelect(),
+        empty_label=None
     )
 
     class Meta:
+        model = Rating
+        fields = ('star',)
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
         model = Comment
-        fields = ['star', 'author', 'text']
+        fields = ['author', 'text']

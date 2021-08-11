@@ -3,8 +3,8 @@ from django.views.generic import DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 
-from .models import Article, ArticleComment, Category
 from .forms import ArticleCommentForm
+from .models import Article, ArticleComment, Category
 
 
 class ArticleView(View):
