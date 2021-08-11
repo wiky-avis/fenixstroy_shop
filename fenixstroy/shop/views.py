@@ -65,14 +65,14 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
             Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
             )
         context['comments'] = glove.comments.all()
-        if context['comments']:
-            price_score = context['comments'].aggregate(
-                Avg('price_score')
-                )['price_score__avg']
-            quality_score = context['comments'].aggregate(
-                Avg('quality_score')
-                )['quality_score__avg']
-            context['int_rating'] = (price_score + quality_score) / 2
+        # if context['comments']:
+        #     price_score = context['comments'].aggregate(
+        #         Avg('price_score')
+        #         )['price_score__avg']
+        #     quality_score = context['comments'].aggregate(
+        #         Avg('quality_score')
+        #         )['quality_score__avg']
+        #     context['int_rating'] = (price_score + quality_score) / 2
         context['cart_product_form'] = CartAddProductForm()
         context['form'] = CommentForm()
         return context

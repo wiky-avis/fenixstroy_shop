@@ -12,7 +12,7 @@ from PIL import Image
 
 
 def get_product_url(obj, viewname):
-    """для формирования слага"""
+    '''для формирования слага'''
     return reverse(viewname, kwargs={'slug': obj.slug, 'id': obj.id})
 
 
@@ -224,6 +224,18 @@ class Gallery(models.Model):
         return get_product_url(self, 'product_detail')
 
 
+class RatingStar(models.Model):
+    value = models.SmallIntegerField('Значение', default=0)
+
+    class Meta:
+        verbose_name = 'Звезда рейтинга'
+        verbose_name_plural = 'Звезды рейтинга'
+        ordering = ('-value',)
+
+    def __str__(self):
+        return f'{self.value}'
+
+
 class Comment(models.Model):
     product = models.ForeignKey(
         Gloves,
@@ -233,14 +245,9 @@ class Comment(models.Model):
     text = models.TextField(
         verbose_name='Комментарий',
         help_text='Введите пожалуйста текст вашего комментария')
-    quality_score = models.IntegerField(
-        'Качество',
-        default=0,
-        validators=[MinValueValidator(1), MaxValueValidator(5)])
-    price_score = models.IntegerField(
-        'Цена',
-        default=0,
-        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    star = models.ForeignKey(
+        RatingStar, on_delete=models.CASCADE, verbose_name='звезда'
+        )
     created = models.DateTimeField(
         verbose_name='Дата публикации', auto_now_add=True)
 

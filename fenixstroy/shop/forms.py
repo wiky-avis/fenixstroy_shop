@@ -1,16 +1,13 @@
 from django import forms
 
-from .models import Comment
+from .models import Comment, RatingStar
 
 
 class CommentForm(forms.ModelForm):
-    quality_score = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'Stars'}))
-    price_score = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'Stars'}))
+    star = forms.ModelChoiceField(
+        queryset=RatingStar.objects.all(), widget=forms.RadioSelect(), empty_label=None
+    )
 
     class Meta:
         model = Comment
-        fields = ['quality_score', 'price_score', 'author', 'text']
-        # widgets = {
-        #     'quality_score': forms.NumberInput(attrs={'class': 'Comment'}),
-        #     'price_score': forms.NumberInput(attrs={'class': 'Comment'})
-        #     }
+        fields = ['star', 'author', 'text']
