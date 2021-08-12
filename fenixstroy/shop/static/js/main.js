@@ -523,6 +523,6 @@ rating.addEventListener("change", function (e) {
         method: 'POST',
         body: data
     })
-        .then(response => alert("Рейтинг установлен"))
-        .catch(error => alert("Ошибка"))
+        //.then(response => alert("Рейтинг установлен"))
+        //.catch(error => alert("Ошибка"))
 });

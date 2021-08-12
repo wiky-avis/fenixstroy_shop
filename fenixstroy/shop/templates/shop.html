@@ -138,12 +138,12 @@
                                     <!-- Product Content Start -->
                                     <div class="pro-content">
                                       <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                      </div>                
+                                        <i class="fa fa-star {% if rating > 0 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                                        <i class="fa fa-star {% if rating > 1 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                                        <i class="fa fa-star {% if rating > 2 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                                        <i class="fa fa-star {% if rating > 3 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                                        <i class="fa fa-star {% if rating > 4 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                                      </div>      
                                       <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
                                       <p><span class="price">{{ product.price }} руб.</del></p>
                                       <p>{{ product.desctriptions|linebreaksbr|truncatechars:200 }}</p>

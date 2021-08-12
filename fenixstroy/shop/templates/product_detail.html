@@ -58,13 +58,13 @@
               <h3 class="product-header">{{ product.name }}</h3>
               <p>Артикул: {{ product.article_number }}</p>
               <div class="rating-summary fix mtb-10">
-                <div class="rating f-left">
-                  <!--Start Stars-->
-                  {% include 'includes/stars.html' %}
-                  <!--End Stars-->
-                </div>
                 {% with product.comments.count as total_comments %}
                 <div class="rating-feedback f-left">
+                    <i class="fa fa-star {% if rating > 0 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                    <i class="fa fa-star {% if rating > 1 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                    <i class="fa fa-star {% if rating > 2 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                    <i class="fa fa-star {% if rating > 3 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                    <i class="fa fa-star {% if rating > 4 %} text-warning {% else %} text-secondary {% endif %}"></i>
                   <a href="#">(Отзывов: {{ total_comments }})</a>
                   <a href="#">Добавить отзыв</a>
                 </div>

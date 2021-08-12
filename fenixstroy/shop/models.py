@@ -9,6 +9,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
 from PIL import Image
+from django.db.models import Avg
 
 
 def get_product_url(obj, viewname):
@@ -236,6 +237,21 @@ class RatingStar(models.Model):
         return f'{self.value}'
 
 
+class Rating(models.Model):
+    star = models.ForeignKey(
+        RatingStar, on_delete=models.CASCADE, verbose_name='Звезда'
+        )
+    product = models.ForeignKey(
+        Gloves, on_delete=models.CASCADE, verbose_name='Продукт'
+        )
+
+    class Meta:
+        verbose_name = 'Рейтинг'
+        verbose_name_plural = 'Рейтинги'
+
+    def __str__(self):
+        return f'{self.star} - {self.product}'
+
 class Comment(models.Model):
     product = models.ForeignKey(
         Gloves,
@@ -245,9 +261,6 @@ class Comment(models.Model):
     text = models.TextField(
         verbose_name='Комментарий',
         help_text='Введите пожалуйста текст вашего комментария')
-    star = models.ForeignKey(
-        RatingStar, on_delete=models.CASCADE, verbose_name='звезда'
-        )
     created = models.DateTimeField(
         verbose_name='Дата публикации', auto_now_add=True)
 

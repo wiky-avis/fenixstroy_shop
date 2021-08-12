@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from .models import (Category, Comment, CustomUser, Gallery, Gloves,
-                     Manufacturer, RatingStar)
+                     Manufacturer, Rating, RatingStar)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -85,3 +85,4 @@ admin.site.register(Gloves, GlovesAdmin)
 admin.site.register(Comment, CommentAdmin)
 # admin.site.register(Order)
 admin.site.register(RatingStar)
+admin.site.register(Rating)

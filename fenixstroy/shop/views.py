@@ -2,16 +2,17 @@ from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import DetailView
+from django.views.generic import DeleteView, DetailView, ListView, TemplateView
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
+from django.utils.safestring import mark_safe
 
 from blog.models import Article
 from cart.forms import CartAddProductForm
-from .forms import CommentForm
 
+from .forms import CommentForm, RatingForm
 from .mixins import CategoryDetailMixin
-from .models import Category, Comment, Gloves, LatestProducts, Manufacturer
+from .models import Category, Comment, Gloves, LatestProducts, Manufacturer, Rating
 
 User = get_user_model()
 
@@ -36,6 +37,7 @@ class BaseView(View):
 class ShopView(View):
 
     def get(self, request, *args, **kwargs):
+        #import ipdb; ipdb.set_trace()
         categories = Category.objects.filter(published=True).all()
         sort = request.GET.getlist('sort')
         products = Gloves.objects.filter(published=True).all().order_by(*sort)
@@ -60,47 +62,53 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
     slug_url_kwarg = 'slug'
 
     def get_context_data(self, **kwargs):
+        #import ipdb; ipdb.set_trace()
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         glove = get_object_or_404(
             Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
             )
         context['comments'] = glove.comments.all()
-        # if context['comments']:
-        #     price_score = context['comments'].aggregate(
-        #         Avg('price_score')
-        #         )['price_score__avg']
-        #     quality_score = context['comments'].aggregate(
-        #         Avg('quality_score')
-        #         )['quality_score__avg']
-        #     context['int_rating'] = (price_score + quality_score) / 2
         context['cart_product_form'] = CartAddProductForm()
+        context['star_form'] = RatingForm()
         context['form'] = CommentForm()
+        context['rating'] = Rating.objects.filter(
+            product=glove.id
+            ).aggregate(Avg('star'))['star__avg']
+
         return context
 
 
-class ProductCommentCreateView(CreateView):
-    model = Comment
+class ProductCommentCreateView(TemplateView):
+    rating_form = RatingForm
+    comment_form = CommentForm
     template_name = 'product_detail.html'
-    fields = ['quality_score', 'price_score', 'author', 'text']
 
-    def form_valid(self, form):
+    def post(self, request, id, slug):
         product = get_object_or_404(
-            Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
+            Gloves, id=id, slug=slug
             )
-        comment = form.save(commit=False)
-        comment.product = product
-        comment.save()
-        return redirect(
-            'product_detail', id=product.id, slug=product.slug)
+        post_data = request.POST or None
+        rating_form = RatingForm(post_data)
+        comment_form = CommentForm(post_data)
 
-    def get_context_data(self, **kwargs):
-        context = super(
-            ProductCommentCreateView, self
-            ).get_context_data(**kwargs)
-        context['product'] = get_object_or_404(
-            Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
+        if rating_form.is_valid() and comment_form.is_valid():
+            rating = rating_form.save(commit=False)
+            rating.product = product
+            rating.save()
+            comment = comment_form.save(commit=False)
+            comment.product = product
+            comment.save()
+            return redirect('product_detail', id=product.id, slug=product.slug)
+
+        context = self.get_context_data(
+            rating_form=rating_form,
+            comment_form=comment_form,
+            product=product
             )
-        return context
+        return self.render_to_response(context)
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
 
 class CategoryDetailView(CategoryDetailMixin, DetailView):
