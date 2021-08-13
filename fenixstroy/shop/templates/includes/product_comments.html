@@ -1,7 +1,7 @@
 {% load crispy_forms_tags %}
 <div id="review" class="tab-pane">
   <!-- Reviews Start -->
-    {% for comment in comments %}
+    {% for comment in product.get_comments %}
     <h4 class="review-mini-title">{{ comment.author }}</h4>
       <div class="single-comment">
         <div class="comment-details fix">
@@ -9,6 +9,15 @@
           <p>{{ comment.text | linebreaksbr }}</p>
         </div>
         <a class="reply" href="#formComment" onclick="addComment('{{ comment.author }}', '{{ comment.id }}')">ответить</a>
+        {% for cmt in comments.comments.all %}
+          <h4 class="review-mini-title">{{ cmt.author }}</h4>
+          <div class="single-comment">
+            <div class="comment-details">
+              <span>{{ cmt.created }}</span>
+              <p>{{ cmt.text | linebreaksbr }}</p>
+            </div>
+          </div>
+        {% endfor %}
       </div>
     {% empty %}
       <p>Пока нет отзывов.</p>

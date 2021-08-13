@@ -210,6 +210,9 @@ class Gloves(Product):
     def get_stars(self):
         return round(self.stars.aggregate(Avg('star'))['star__avg'])
 
+    def get_comments(self):
+        return self.comments.filter(parent__isnull=True)
+
 
 class Gallery(models.Model):
     image = models.ImageField(
