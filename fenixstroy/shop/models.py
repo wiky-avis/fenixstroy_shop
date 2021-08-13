@@ -262,6 +262,13 @@ class Comment(models.Model):
         Gloves,
         on_delete=models.CASCADE,
         related_name='comments', verbose_name='Товар')
+    parent = models.ForeignKey(
+        'self',
+        verbose_name='Родитель',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+        )
     author = models.CharField('Автор', max_length=100)
     text = models.TextField(
         verbose_name='Комментарий',
@@ -273,3 +280,6 @@ class Comment(models.Model):
         ordering = ('-created',)
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return f'{self.author} - {self.product}'
