@@ -85,6 +85,8 @@ class ProductCommentCreateView(TemplateView):
             rating.product = product
             rating.save()
             comment = comment_form.save(commit=False)
+            if request.POST.get('parent', None):
+                comment.parent_id = int(request.POST.get('parent'))
             comment.product = product
             comment.save()
             return redirect('product_detail', id=product.id, slug=product.slug)

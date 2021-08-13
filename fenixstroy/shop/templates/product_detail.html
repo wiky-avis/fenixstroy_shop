@@ -61,8 +61,8 @@
                 {% with product.comments.count as total_comments %}
                 <div class="rating-feedback f-left">
                     {% include 'includes/rating_stars.html' %}
-                  <a href="#">(Отзывов: {{ total_comments }})</a>
-                  <a href="#">Добавить отзыв</a>
+                  <a href="#rw">(Отзывов: {{ total_comments }})</a>
+                  <a href="#formComment">Добавить отзыв</a>
                 </div>
               </div>
               <ul class="list-inline">
@@ -103,7 +103,7 @@
             <ul class="main-thumb-desc nav">
               <li><a class="active" data-toggle="tab" href="#dtail">Описание товара</a></li>
               
-              <li><a data-toggle="tab" href="#review">Отзывы {{ total_comments }}</a></li>
+              <li><a data-toggle="tab" href="#review" id="rw">Отзывы {{ total_comments }}</a></li>
               {% endwith %}
             </ul>
             <!-- Product Thumbnail Tab Content Start -->
