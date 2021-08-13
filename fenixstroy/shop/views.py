@@ -1,19 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-from django.db.models import Avg
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.safestring import mark_safe
-from django.views.generic import DeleteView, DetailView, ListView, TemplateView
+from django.views.generic import DetailView, TemplateView
 from django.views.generic.base import View
-from django.views.generic.edit import CreateView
 
 from blog.models import Article
 from cart.forms import CartAddProductForm
 
 from .forms import CommentForm, RatingForm
-from .mixins import CategoryDetailMixin
-from .models import (Category, Comment, Gloves, LatestProducts, Manufacturer,
-                     Rating)
+from .mixins import MyGlovesMixins
+from .models import Category, Gloves, LatestProducts, Manufacturer
 
 User = get_user_model()
 
@@ -21,7 +17,6 @@ User = get_user_model()
 class BaseView(View):
 
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.filter(published=True).all()
         products = LatestProducts.objects.get_products_for_main_page(
             'gloves',
             whith_respect_to='gloves')
@@ -29,10 +24,9 @@ class BaseView(View):
         cart_product_form = CartAddProductForm()
         return render(
             request, 'base.html', {
-                'categories': categories,
                 'products': products,
-                'cart_product_form': cart_product_form,
-                'articles': articles})
+                'articles': articles,
+                'cart_product_form': cart_product_form})
 
 
 class ShopView(View):
@@ -55,7 +49,7 @@ class ShopView(View):
                 )
 
 
-class ProductDetailView(CategoryDetailMixin, DetailView):
+class ProductDetailView(MyGlovesMixins, DetailView):
     model = Gloves
     queryset = Gloves.objects.filter(published=True).all()
     context_object_name = 'product'
@@ -63,13 +57,11 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
     slug_url_kwarg = 'slug'
 
     def get_context_data(self, **kwargs):
-        #import ipdb; ipdb.set_trace()
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         glove = get_object_or_404(
             Gloves, pk=self.kwargs.get('id'), slug=self.kwargs.get('slug')
             )
         context['comments'] = glove.comments.all()
-        context['cart_product_form'] = CartAddProductForm()
         context['star_form'] = RatingForm()
         context['form'] = CommentForm()
         return context
@@ -108,7 +100,7 @@ class ProductCommentCreateView(TemplateView):
         return self.post(request, *args, **kwargs)
 
 
-class CategoryDetailView(CategoryDetailMixin, DetailView):
+class CategoryDetailView(MyGlovesMixins, DetailView):
     model = Category
     queryset = Category.objects.all()
     context_object_name = 'category'
@@ -126,12 +118,10 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
         paginator = Paginator(products, 9)
         page_number = self.request.GET.get('page')
         context['page'] = paginator.get_page(page_number)
-        context['manufacturer'] = Manufacturer.objects.all()
-        context['cart_product_form'] = CartAddProductForm()
         return context
 
 
-class ManufactureDetailView(CategoryDetailMixin, DetailView):
+class ManufactureDetailView(MyGlovesMixins, DetailView):
     model = Manufacturer
     queryset = Manufacturer.objects.all()
     context_object_name = 'manufacture'
@@ -149,8 +139,6 @@ class ManufactureDetailView(CategoryDetailMixin, DetailView):
         paginator = Paginator(products, 9)
         page_number = self.request.GET.get('page')
         context['page'] = paginator.get_page(page_number)
-        context['manufacturer'] = Manufacturer.objects.all()
-        context['cart_product_form'] = CartAddProductForm()
         return context
 
 

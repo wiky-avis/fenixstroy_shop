@@ -5,7 +5,6 @@ from io import BytesIO
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
@@ -245,7 +244,9 @@ class Rating(models.Model):
         RatingStar, on_delete=models.CASCADE, verbose_name='Звезда'
         )
     product = models.ForeignKey(
-        Gloves, on_delete=models.CASCADE, verbose_name='Продукт', related_name='stars'
+        Gloves, on_delete=models.CASCADE,
+        verbose_name='Продукт',
+        related_name='stars'
         )
 
     class Meta:
@@ -254,6 +255,7 @@ class Rating(models.Model):
 
     def __str__(self):
         return f'{self.star} - {self.product}'
+
 
 class Comment(models.Model):
     product = models.ForeignKey(

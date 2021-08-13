@@ -60,11 +60,7 @@
               <div class="rating-summary fix mtb-10">
                 {% with product.comments.count as total_comments %}
                 <div class="rating-feedback f-left">
-                    <i class="fa fa-star {% if product.get_stars > 0 %} text-warning {% else %} text-secondary {% endif %}"></i>
-                    <i class="fa fa-star {% if product.get_stars > 1 %} text-warning {% else %} text-secondary {% endif %}"></i>
-                    <i class="fa fa-star {% if product.get_stars > 2 %} text-warning {% else %} text-secondary {% endif %}"></i>
-                    <i class="fa fa-star {% if product.get_stars > 3 %} text-warning {% else %} text-secondary {% endif %}"></i>
-                    <i class="fa fa-star {% if product.get_stars > 4 %} text-warning {% else %} text-secondary {% endif %}"></i>
+                    {% include 'includes/rating_stars.html' %}
                   <a href="#">(Отзывов: {{ total_comments }})</a>
                   <a href="#">Добавить отзыв</a>
                 </div>
