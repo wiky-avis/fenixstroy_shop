@@ -2,17 +2,18 @@ from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.safestring import mark_safe
 from django.views.generic import DeleteView, DetailView, ListView, TemplateView
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
-from django.utils.safestring import mark_safe
 
 from blog.models import Article
 from cart.forms import CartAddProductForm
 
 from .forms import CommentForm, RatingForm
 from .mixins import CategoryDetailMixin
-from .models import Category, Comment, Gloves, LatestProducts, Manufacturer, Rating
+from .models import (Category, Comment, Gloves, LatestProducts, Manufacturer,
+                     Rating)
 
 User = get_user_model()
 
@@ -37,7 +38,6 @@ class BaseView(View):
 class ShopView(View):
 
     def get(self, request, *args, **kwargs):
-        #import ipdb; ipdb.set_trace()
         categories = Category.objects.filter(published=True).all()
         sort = request.GET.getlist('sort')
         products = Gloves.objects.filter(published=True).all().order_by(*sort)
@@ -51,7 +51,8 @@ class ShopView(View):
                 'categories': categories,
                 'manufacturer': manufacturer,
                 'cart_product_form': cart_product_form,
-                'page': page})
+                'page': page}
+                )
 
 
 class ProductDetailView(CategoryDetailMixin, DetailView):
@@ -71,10 +72,6 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
         context['cart_product_form'] = CartAddProductForm()
         context['star_form'] = RatingForm()
         context['form'] = CommentForm()
-        context['rating'] = Rating.objects.filter(
-            product=glove.id
-            ).aggregate(Avg('star'))['star__avg']
-
         return context
 
 

@@ -7,9 +7,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import Avg
 from django.urls import reverse
 from PIL import Image
-from django.db.models import Avg
 
 
 def get_product_url(obj, viewname):
@@ -208,6 +208,9 @@ class Gloves(Product):
     def get_absolute_url(self):
         return get_product_url(self, 'product_detail')
 
+    def get_stars(self):
+        return round(self.stars.aggregate(Avg('star'))['star__avg'])
+
 
 class Gallery(models.Model):
     image = models.ImageField(
@@ -242,7 +245,7 @@ class Rating(models.Model):
         RatingStar, on_delete=models.CASCADE, verbose_name='Звезда'
         )
     product = models.ForeignKey(
-        Gloves, on_delete=models.CASCADE, verbose_name='Продукт'
+        Gloves, on_delete=models.CASCADE, verbose_name='Продукт', related_name='stars'
         )
 
     class Meta:
