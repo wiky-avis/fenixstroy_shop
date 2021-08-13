@@ -8,14 +8,14 @@
           <span>{{ comment.created }}</span>
           <p>{{ comment.text | linebreaksbr }}</p>
         </div>
-        <a class="reply" href="#">ответить</a>
+        <a class="reply" href="#formComment" onclick="addComment('{{ comment.author }}', '{{ comment.id }}')">ответить</a>
       </div>
     {% empty %}
       <p>Пока нет отзывов.</p>
     {% endfor %}
 
-    <form method="post" action="{% url 'new_comment_product' product.pk product.slug %}">
-      
+    <form method="post" action="{% url 'new_comment_product' product.pk product.slug %}" id="formComment">
+      <input type="hidden" name="parent" id="contactparent" value="">
       <div class="form-group">
           <input type="hidden" value="{{ product.id }}" name="product">
           <span class="rating">
@@ -34,3 +34,9 @@
     </div>
   <div>
 </div>
+<script>
+function addComment(author, id){
+  document.getElementById('contactparent').value = id;
+  document.getElementById('id_text').innerText = `${author}, `
+}
+</script>
