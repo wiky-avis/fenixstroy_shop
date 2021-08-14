@@ -1,52 +1,198 @@
+{% load static %}
 {% load crispy_forms_tags %}
-<div id="review" class="tab-pane">
-  <!-- Reviews Start -->
-    {% for comment in product.get_comments %}
-    <h4 class="review-mini-title">{{ comment.author }}</h4>
-      <div class="single-comment">
-        <div class="comment-details fix">
-          <span>{{ comment.created }}</span>
-          <p>{{ comment.text | linebreaksbr }}</p>
-        </div>
-        <a class="reply" href="#formComment" onclick="addComment('{{ comment.author }}', '{{ comment.id }}')">ответить</a>
-        </div>
-        {% for cmt in comment.comment_set.all %}
-          <div class="review ml-5">
-            <h4 class="review-mini-title">{{ cmt.author }}</h4>
-            <div class="single-comment">
-              <div class="comment-details">
-                <span>{{ cmt.created }}</span>
-                <p>{{ cmt.text }}</p>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      
-    {% empty %}
-      <p>Пока нет отзывов.</p>
-    {% endfor %}
-<br/>
-    <form method="post" action="{% url 'new_comment_product' product.pk product.slug %}" id="formComment">
-      <input type="hidden" name="parent" id="contactparent" value="">
-      <div class="form-group">
-          <input type="hidden" value="{{ product.id }}" name="product">
-          <span class="rating">
-              {% for k, v in star_form.fields.star.choices %}
-                  <input id="rating{{ v }}" type="radio" name="star"
-                         value="{{ k }}">
-                  <label for="rating{{ v }}">{{ k }}</label>
-              {% endfor %}
-          </span>
-          {{ form|crispy }}
-          {% csrf_token %}
-      </div>
-      <button type="submit" class="btn-submit">Отправить отзыв</button>
-    </form>
+<section class="tab-pane" id="review"><div id="review" class="tab-pane">
+    <div class="container">   
+    	<div class="row">
+            <div class="col-sm-8">   
+                <form method="post" action="{% url 'new_comment_product' product.pk product.slug %}" id="formComment">
+                	<h3 class="pull-left">Новый отзыв</h3>
+                	
+                    <fieldset>
+                    <input type="hidden" name="parent" id="contactparent" value="">
+                        <div class="row">
+                        <input type="hidden" value="{{ product.id }}" name="product">
+                            <span class="rating">
+                                {% for k, v in star_form.fields.star.choices %}
+                                    <input id="rating{{ v }}" type="radio" name="star"
+                                            value="{{ k }}">
+                                    <label for="rating{{ v }}">{{ k }}</label>
+                                {% endfor %}
+                            </span>
+                            <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                {{ form|crispy }}
+                                {% csrf_token %}
+                            </div>
+                            <button type="submit" class="btn btn-normal pull-right">Отправить отзыв</button>
+                        </div>  	
+                    </fieldset>
+                </form>
+                <h3>{{ product.comments.count }} Отзывы</h3>
+                {% for comment in product.get_comments %}
+                
+                
+                <!-- COMMENT - START -->
+                <div class="media">
+                   <a class="pull-left" href="#"><img class="media-object" src="{% static 'img/avatar/comment.png' %}" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ comment.author }}</h4>
+                        <p>{{ comment.text | linebreaksbr }}</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>{{ comment.created }}</li>
+                        </ul>
+                        <ul class="list-unstyled list-inline media-detail pull-right">
+                            <li class=""><a class="reply" href="#formComment" onclick="addComment('{{ comment.author }}', '{{ comment.id }}')">Ответить</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- COMMENT - END -->
 
+                    {% for cmt in comment.comment_set.all %}
+                        <div class="media ml-5">
+                            <a class="pull-left" href="#"><img class="media-object" src="{% static 'img/avatar/comment_2.png' %}" alt=""></a>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ cmt.author }}</h4>
+                                <p>{{ cmt.text | linebreaksbr }}</p>
+                                <ul class="list-unstyled list-inline media-detail pull-left">
+                                    <li><i class="fa fa-calendar"></i>{{ cmt.created }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% empty %}
+                    <p>Пока нет отзывов.</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-  <div>
-</div>
-<script>
+</section>
+
+<style type="text/css">
+body{margin-top:20px;}
+
+.tab-pane {
+  padding:30px 0;
+	background-color:#FFFFFF;
+}
+
+.tab-pane.grey {
+	background-color:#F0F0F0;
+	padding:50px 0;
+	height:100%;
+}
+
+.tab-pane h2 {
+	font-weight:700;
+	font-size:35px;
+	line-height:45px;
+	text-transform:uppercase;
+	margin:20px 0;
+}
+
+.tab-pane h3 {
+	font-weight:400;
+	font-size:20px;
+	color:#555555;
+	margin:10px 0 15px;
+	padding:0;
+}
+
+.content-headline {
+	height:1px;
+	text-align:center;
+	margin:20px 0 70px;
+}
+
+.content-headline h2 {
+	background-color:#FFFFFF;
+	display:inline-block;
+	margin:-20px auto 0;
+	padding:0 20px;
+}
+
+.grey .content-headline h2 {
+	background-color:#F0F0F0;
+}
+
+.content-headline h3 {
+	font-size:14px;
+	color:#AAAAAA;
+	display:block;
+}
+
+#review form {
+	margin-bottom:30px;
+}
+
+#review .btn {
+	margin-top:7px;
+}
+
+#review form fieldset {
+	clear:both;
+}
+
+#review form textarea {
+	height:100px;
+}
+
+#review .media {
+	border-top:1px dashed #DDDDDD;
+	padding:20px 0;
+	margin:0;
+}
+
+#review .media > .pull-left {
+    margin-right:20px;
+}
+
+#review .media img {
+	max-width:100px;
+}
+
+#review .media h4 {
+	margin:0 0 10px;
+}
+
+#review .media h4 span {
+	font-size:14px;
+	float:right;
+	color:#999999;
+}
+
+#review .media p {
+	margin-bottom:15px;
+	text-align:justify;
+}
+
+#review .media-detail {
+	margin:0;
+}
+
+#review .media-detail li {
+	color:#AAAAAA;
+	font-size:12px;
+	padding-right: 10px;
+	font-weight:600;
+}
+
+#review .media-detail a:hover {
+	text-decoration:underline;
+}
+
+#review .media-detail li:last-child {
+	padding-right:0;
+}
+
+#review .media-detail li i {
+	color:#666666;
+	font-size:15px;
+	margin-right:10px;
+}
+
+</style>
+
+<script type="text/javascript">
 function addComment(author, id){
   document.getElementById('contactparent').value = id;
   document.getElementById('id_text').innerText = `${author}, `
